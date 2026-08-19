@@ -71,16 +71,68 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "toxerp.wsgi.application"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": desktop_config.DATABASE_PATH,
-        "CONN_MAX_AGE": int(os.environ.get("TOX_DB_CONN_MAX_AGE", "60")),
-        "OPTIONS": {
-            "timeout": 30,
-        },
+# Database configuration: prefer DATABASE_URL when provided (e.g., PostgreSQL on Railway), otherwise fallback to local SQLite
+DATABASE_URL = os.environ.get("DATABASE_URL") or os.environ.get("TOX_DATABASE_URL")
+if DATABASE_URL:
+    # Parse DATABASE_URL without adding new dependencies
+    from urllib.parse import urlparse
+
+    parsed = urlparse(DATABASE_URL)
+    if parsed.scheme in ("postgres", "postgresql"):
+        DB_NAME = parsed.path[1:]
+        DB_USER = parsed.username or ""
+        DB_PASSWORD = parsed.password or ""
+        DB_HOST = parsed.hostname or ""
+        DB_PORT = parsed.port or ""
+        DATABASES = {
+            "default": {
+                "ENGINE": "django.db.backends.postgresql",
+                "NAME": DB_NAME,
+                "USER": DB_USER,
+                "PASSWORD": DB_PASSWORD,
+                "HOST": DB_HOST,
+                "PORT": DB_PORT,
+                "CONN_MAX_AGE": int(os.environ.get("TOX_DB_CONN_MAX_AGE", "60")),
+            }
+        }
+    elif parsed.scheme.startswith("sqlite"):
+        # sqlite:///absolute/path or sqlite:///:memory:
+        path = parsed.path or ""
+        if path in (":memory:", ""):
+            NAME = path
+        else:
+            from pathlib import Path
+
+            NAME = Path(path).expanduser()
+        DATABASES = {
+            "default": {
+                "ENGINE": "django.db.backends.sqlite3",
+                "NAME": NAME,
+                "CONN_MAX_AGE": int(os.environ.get("TOX_DB_CONN_MAX_AGE", "60")),
+                "OPTIONS": {"timeout": 30},
+            }
+        }
+    else:
+        # Unknown scheme; fallback to desktop sqlite
+        DATABASES = {
+            "default": {
+                "ENGINE": "django.db.backends.sqlite3",
+                "NAME": desktop_config.DATABASE_PATH,
+                "CONN_MAX_AGE": int(os.environ.get("TOX_DB_CONN_MAX_AGE", "60")),
+                "OPTIONS": {"timeout": 30},
+            }
+        }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": desktop_config.DATABASE_PATH,
+            "CONN_MAX_AGE": int(os.environ.get("TOX_DB_CONN_MAX_AGE", "60")),
+            "OPTIONS": {
+                "timeout": 30,
+            },
+        }
     }
-}
 
 BACKUP_DIR = desktop_config.BACKUP_DIR
 LOG_DIR = desktop_config.LOG_DIR
@@ -129,6 +181,8 @@ USE_TZ = True
 
 STATIC_URL = "/assets/"
 STATICFILES_DIRS = [BASE_DIR / "assets"]
+# Where collectstatic will place files for production
+STATIC_ROOT = Path(os.environ.get("TOX_STATIC_ROOT", str(BASE_DIR / "staticfiles")))
 MEDIA_URL = "/media/"
 MEDIA_ROOT = Path(os.environ.get("TOX_MEDIA_ROOT", str(BASE_DIR / "media")))
 
