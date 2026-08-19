@@ -39,6 +39,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    # WhiteNoise middleware should come directly after SecurityMiddleware for serving static files in production
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "erp.middleware.LocalOnlyMiddleware",
     "erp.middleware.DevCorsMiddleware",
@@ -183,6 +185,8 @@ STATIC_URL = "/assets/"
 STATICFILES_DIRS = [BASE_DIR / "assets"]
 # Where collectstatic will place files for production
 STATIC_ROOT = Path(os.environ.get("TOX_STATIC_ROOT", str(BASE_DIR / "staticfiles")))
+# Use WhiteNoise for static files in production
+STATICFILES_STORAGE = os.environ.get("TOX_STATICFILES_STORAGE", "whitenoise.storage.CompressedStaticFilesStorage")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = Path(os.environ.get("TOX_MEDIA_ROOT", str(BASE_DIR / "media")))
 
