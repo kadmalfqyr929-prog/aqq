@@ -190,6 +190,17 @@ STATICFILES_STORAGE = os.environ.get("TOX_STATICFILES_STORAGE", "whitenoise.stor
 MEDIA_URL = "/media/"
 MEDIA_ROOT = Path(os.environ.get("TOX_MEDIA_ROOT", str(BASE_DIR / "media")))
 
+# Production security settings (read from env)
+SECURE_SSL_REDIRECT = os.environ.get("SECURE_SSL_REDIRECT", "0") == "1"
+SESSION_COOKIE_SECURE = os.environ.get("SESSION_COOKIE_SECURE", "0") == "1"
+CSRF_COOKIE_SECURE = os.environ.get("CSRF_COOKIE_SECURE", "0") == "1"
+SECURE_HSTS_SECONDS = int(os.environ.get("SECURE_HSTS_SECONDS", "0"))
+SECURE_HSTS_PRELOAD = os.environ.get("SECURE_HSTS_PRELOAD", "0") == "1"
+SECURE_HSTS_INCLUDE_SUBDOMAINS = os.environ.get("SECURE_HSTS_INCLUDE_SUBDOMAINS", "0") == "1"
+
+# X-Frame-Options (default DENY in production when not running in desktop mode)
+X_FRAME_OPTIONS = os.environ.get("X_FRAME_OPTIONS", "DENY" if not DESKTOP_MODE else "SAMEORIGIN")
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 DATA_UPLOAD_MAX_MEMORY_SIZE = int(os.environ.get("TOX_DATA_UPLOAD_MAX_MEMORY_SIZE", str(128 * 1024 * 1024)))
 FILE_UPLOAD_MAX_MEMORY_SIZE = int(os.environ.get("TOX_FILE_UPLOAD_MAX_MEMORY_SIZE", str(128 * 1024 * 1024)))
