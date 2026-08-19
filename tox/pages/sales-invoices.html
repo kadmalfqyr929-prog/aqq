@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TOX | Sales Invoices</title>
+    <script src="../assets/js/theme-bootstrap.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/interaction-core.js?v=20260530-arabic-utf8"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=20260606-tox-classic-logo" />
+  </head>
+  <body data-page="sales-invoices">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="../index.html"><span class="brand-mark">TOX</span><span><strong>TOX</strong><small data-i18n="brandSub">نظام مبيعات ومخزون</small></span></a>
+        <nav class="nav-list"></nav>
+      </aside>
+
+      <main class="workspace invoice-ledger-page">
+        <header class="topbar topbar-clean invoice-ledger-topbar">
+          <div>
+            <p class="eyebrow">متابعة فواتير البيع والتحصيل</p>
+            <h1 data-i18n="navSalesInvoices">فواتير البيع</h1>
+          </div>
+          <div class="invoice-ledger-toolbar">
+            <a class="button ghost" href="sales.html#create" data-i18n="navCreateSalesInvoice">إنشاء فاتورة</a>
+            <button class="button primary" type="button" data-invoice-filter-apply>بحث</button>
+          </div>
+        </header>
+
+        <section class="invoice-ledger-kpis">
+          <article class="metric-card"><span>عدد الفواتير</span><strong data-invoice-ledger-count>0</strong></article>
+          <article class="metric-card"><span>الإجمالي</span><strong data-invoice-ledger-total>0</strong></article>
+          <article class="metric-card"><span>المدفوع</span><strong data-invoice-ledger-paid>0</strong></article>
+          <article class="metric-card danger"><span>المتبقي</span><strong data-invoice-ledger-debt>0</strong></article>
+        </section>
+
+        <section class="panel invoice-filter-panel">
+          <div class="invoice-filter-grid">
+            <label class="field"><span>بحث عام</span><input data-invoice-filter-q placeholder="رقم الفاتورة، العميل، المنتج، الباركود" /></label>
+            <label class="field"><span>العميل</span><select data-invoice-filter-party></select></label>
+            <label class="field"><span>المخزن</span><select data-invoice-filter-warehouse></select></label>
+            <label class="field"><span>الحالة</span><select data-invoice-filter-status><option value="">كل الحالات</option><option value="paid">مسددة</option><option value="partial">جزئية</option><option value="unpaid">غير مسددة</option></select></label>
+            <label class="field"><span>النوع</span><select data-invoice-filter-kind><option value="">كل الأنواع</option><option value="direct_pos">بيع مباشر</option><option value="invoice">فاتورة</option><option value="installment">أقساط</option></select></label>
+            <label class="field"><span>العملة</span><select data-invoice-filter-currency><option value="">عملة النظام</option><option value="IQD">IQD</option><option value="USD">USD</option></select></label>
+            <label class="field"><span>من تاريخ</span><input type="date" data-invoice-filter-date-from /></label>
+            <label class="field"><span>إلى تاريخ</span><input type="date" data-invoice-filter-date-to /></label>
+            <label class="field"><span>أقل مبلغ</span><input type="number" min="0" step="0.01" data-invoice-filter-min-total /></label>
+            <label class="field"><span>أعلى مبلغ</span><input type="number" min="0" step="0.01" data-invoice-filter-max-total /></label>
+            <label class="field"><span>الدين</span><select data-invoice-filter-has-debt><option value="">الكل</option><option value="true">بها متبقي</option><option value="false">بدون متبقي</option></select></label>
+            <div class="invoice-filter-actions">
+              <button class="button ghost" type="button" data-invoice-filter-clear>مسح</button>
+              <button class="button primary" type="button" data-invoice-filter-apply>تطبيق الفلاتر</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel invoice-ledger-panel">
+          <div class="panel-head">
+            <h2>سجل فواتير البيع</h2>
+            <span class="status-dot">آخر تحديث <b data-invoice-ledger-updated>--</b></span>
+          </div>
+          <div class="table-wrap invoice-ledger-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>الفاتورة</th>
+                  <th>العميل والصنف</th>
+                  <th>النوع</th>
+                  <th>الحالة</th>
+                  <th>الإجمالي</th>
+                  <th>المدفوع</th>
+                  <th>المتبقي</th>
+                  <th>إجراء</th>
+                </tr>
+              </thead>
+              <tbody data-invoice-ledger-body></tbody>
+            </table>
+          </div>
+          <div class="warehouse-empty" data-invoice-ledger-empty hidden>لا توجد فواتير مطابقة.</div>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/js/api-client.js?v=20260605-auth-session"></script>
+    <script src="../assets/js/welcome.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/state.js?v=20260606-settings-sync"></script>
+    <script src="../assets/js/ui.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/invoice-print-engine.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/invoice-ledger.js?v=20260530-arabic-utf8"></script>
+  </body>
+</html>
+

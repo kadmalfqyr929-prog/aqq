@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TOX | Labels</title>
+    <script src="../assets/js/theme-bootstrap.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/interaction-core.js?v=20260530-arabic-utf8"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=20260606-tox-classic-logo" />
+  </head>
+  <body data-page="labels">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="../index.html"><span class="brand-mark">TOX</span><span><strong>TOX</strong><small data-i18n="brandSub">نظام مبيعات ومخزون</small></span></a>
+        <nav class="nav-list">
+          <a class="nav-link" href="../index.html" data-i18n="navCommand">Command</a>
+          <a class="nav-link" href="sales.html" data-i18n="navSales">Sales POS</a>
+          <a class="nav-link active" href="products.html" data-i18n="navProducts">Products</a>
+          <a class="nav-link" href="warehouse.html" data-i18n="navWarehouse">Warehouse Hub</a>
+          <a class="nav-link" href="purchases.html" data-i18n="navPurchases">Purchases</a>
+          <a class="nav-link" href="clients.html" data-i18n="navClients">Client Ledger</a>
+          <a class="nav-link" href="suppliers.html" data-i18n="navSuppliers">Suppliers</a>
+          <a class="nav-link" href="employees.html" data-i18n="navEmployees">Employees</a>
+          <a class="nav-link" href="reports.html" data-i18n="navReports">Smart Reports</a>
+          <a class="nav-link" href="settings.html" data-i18n="navSettings">Settings</a>
+        </nav>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar topbar-clean">
+          <div>
+            <p class="eyebrow" data-i18n="labelsEyebrow">Print-ready product labels</p>
+            <h1 data-i18n="labelsTitle">Labels</h1>
+          </div>
+          <div class="topbar-actions">
+            <div class="smart-search-shell module-search">
+              <span>بحث الليبلات</span>
+              <div class="smart-search-control">
+                <label class="smart-search-pill">
+                  <i class="smart-search-icon" aria-hidden="true"></i>
+                  <input class="quick-search" data-label-search placeholder="ابحث عن منتج أو باركود أو برند" />
+                </label>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="label-layout">
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <h2 data-i18n="printCurrentLabel">Print Label</h2>
+                <p class="panel-note" data-i18n="labelsHint">Choose a product, set copies, and print a clean label with name and barcode.</p>
+              </div>
+              <span class="status-dot" data-i18n="soundReady">Interaction sounds</span>
+            </div>
+
+            <form class="product-form product-form-rich" data-label-form>
+              <label class="field">
+                <span>المستودع</span>
+                <select data-label-warehouse></select>
+              </label>
+              <label class="field">
+                <span data-i18n="selectProduct">Select product</span>
+                <select data-label-product required></select>
+              </label>
+              <label class="field">
+                <span data-i18n="unit">Unit</span>
+                <select data-label-unit required></select>
+              </label>
+              <label class="field">
+                <span data-i18n="labelCopies">Copies</span>
+                <input type="number" min="1" max="48" step="1" value="1" data-label-copies required />
+              </label>
+              <div class="label-actions">
+                <button class="button primary" type="submit" data-i18n="printCurrentLabel">Print Label</button>
+              </div>
+            </form>
+          </article>
+
+          <aside class="panel">
+            <div class="panel-head">
+              <h2 data-i18n="labelPreview">Label Preview</h2>
+            </div>
+            <div class="label-preview-board" data-label-preview></div>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/js/api-client.js?v=20260605-auth-session"></script>
+    <script src="../assets/js/welcome.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/state.js?v=20260606-settings-sync"></script>
+    <script src="../assets/js/ui.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/labels.js"></script>
+  </body>
+</html>
+

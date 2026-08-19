@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TOX | المستودعات</title>
+    <script src="../assets/js/theme-bootstrap.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/interaction-core.js?v=20260530-arabic-utf8"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=20260606-warehouse-comfort" />
+  </head>
+  <body data-page="warehouse">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="../index.html"><span class="brand-mark">TOX</span><span><strong>TOX</strong><small data-i18n="brandSub">نظام مبيعات ومخزون</small></span></a>
+        <nav class="nav-list">
+          <a class="nav-link" href="../index.html" data-i18n="navCommand">Command</a>
+          <a class="nav-link" href="sales.html" data-i18n="navSales">Sales POS</a>
+          <a class="nav-link" href="products.html" data-i18n="navProducts">Products</a>
+          <a class="nav-link active" href="warehouse.html" data-i18n="navWarehouse">Warehouses</a>
+          <a class="nav-link" href="purchases.html" data-i18n="navPurchases">Purchases</a>
+          <a class="nav-link" href="clients.html" data-i18n="navClients">Client Ledger</a>
+          <a class="nav-link" href="suppliers.html" data-i18n="navSuppliers">Suppliers</a>
+          <a class="nav-link" href="employees.html" data-i18n="navEmployees">Employees</a>
+          <a class="nav-link" href="reports.html" data-i18n="navReports">Smart Reports</a>
+          <a class="nav-link" href="settings.html" data-i18n="navSettings">Settings</a>
+        </nav>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar topbar-clean">
+          <div>
+            <p class="eyebrow" data-warehouse-eyebrow data-i18n="warehouseEyebrow">Relational warehouse mapping</p>
+            <h1 data-warehouse-title data-i18n="warehouseTitle">Warehouses</h1>
+          </div>
+          <div class="topbar-actions">
+            <div class="smart-search-shell module-search">
+              <span data-warehouse-search-label>بحث المستودعات</span>
+              <div class="smart-search-control">
+                <label class="smart-search-pill">
+                  <i class="smart-search-icon" aria-hidden="true"></i>
+                  <input class="quick-search" data-warehouse-search placeholder="ابحث عن مستودع أو منتج" />
+                </label>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section data-warehouse-view-panel="manage">
+          <section class="panel warehouse-create-panel" data-warehouse-create-panel>
+            <div class="panel-head">
+              <div>
+                <h2 data-i18n="navWarehouseList">Warehouses</h2>
+                <p class="panel-note">إضافة وتنظيم بيانات المستودعات.</p>
+              </div>
+              <button class="button primary" type="button" data-warehouse-add-toggle>إضافة مستودع</button>
+            </div>
+            <form class="product-form compact-form warehouse-create-form" data-warehouse-form hidden>
+              <input placeholder="Warehouse name" data-i18n-placeholder="warehouseName" data-warehouse-name required />
+              <input placeholder="WH-03" data-i18n-placeholder="warehouseCode" data-warehouse-code />
+              <input placeholder="Zone" data-i18n-placeholder="zone" data-warehouse-zone />
+              <input placeholder="Manager" data-i18n-placeholder="manager" data-warehouse-manager />
+              <label class="inventory-color-field">
+                <span>لون المستودع</span>
+                <input type="color" value="#d6b35a" data-warehouse-color />
+              </label>
+              <input placeholder="Note" data-i18n-placeholder="note" data-warehouse-note />
+              <button class="button primary" type="submit" data-i18n="addWarehouse">Add Warehouse</button>
+            </form>
+          </section>
+
+          <section class="warehouse-layout">
+            <aside class="panel warehouse-list-panel">
+              <div class="panel-head">
+                <h2 data-i18n="warehouses">Warehouses</h2>
+                <span class="status-dot" data-warehouse-count>0</span>
+              </div>
+              <div class="warehouse-list" data-warehouse-list></div>
+            </aside>
+
+            <section class="panel warehouse-detail-panel">
+              <div data-warehouse-detail></div>
+            </section>
+          </section>
+        </section>
+
+        <section data-warehouse-view-panel="presets" hidden>
+          <section class="panel inventory-page-note">
+            <div class="panel-head">
+              <div>
+                <h2 data-i18n="navUnitsBrands">Units and Brands</h2>
+                <p class="panel-note">ثبت الوحدات والبرندات والمنشأ هنا حتى تظهر كاقتراحات عند إضافة منتج جديد.</p>
+              </div>
+            </div>
+          </section>
+          <section class="preset-layout">
+            <article class="panel">
+              <div class="panel-head">
+                <h2>إنشاء وحدة مقترحة</h2>
+                <span class="status-dot" data-unit-preset-count>0</span>
+              </div>
+              <form class="product-form compact-form" data-unit-preset-form>
+                <select data-unit-preset-kind>
+                  <option value="weighted">موزون</option>
+                  <option value="packaged">معبأ</option>
+                  <option value="single">مفرد</option>
+                  <option value="liquid">سائل</option>
+                  <option value="length">طولي</option>
+                </select>
+                <input placeholder="اسم الوحدة: كيلو، كارتون، سيت" data-unit-preset-name required />
+                <input type="number" min="0.0001" step="any" placeholder="الكمية داخل الوحدة" data-unit-preset-multiplier required />
+                <label class="inventory-color-field">
+                  <span>لون الوحدة</span>
+                  <input type="color" value="#34d399" data-unit-preset-color />
+                </label>
+                <button class="button primary" type="submit">حفظ الوحدة</button>
+              </form>
+              <div class="preset-list" data-unit-preset-list></div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <h2>إنشاء برند مقترح</h2>
+                <span class="status-dot" data-brand-count>0</span>
+              </div>
+              <form class="product-form compact-form" data-brand-form>
+                <input placeholder="اسم البرند / الماركة" data-brand-name required />
+                <label class="inventory-color-field">
+                  <span>لون البرند</span>
+                  <input type="color" value="#a78bfa" data-brand-color />
+                </label>
+                <button class="button primary" type="submit">حفظ البرند</button>
+              </form>
+              <div class="preset-list" data-brand-list></div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <h2>إنشاء منشأ مقترح</h2>
+                <span class="status-dot" data-origin-country-count>0</span>
+              </div>
+              <form class="product-form compact-form" data-origin-country-form>
+                <input placeholder="اسم المنشأ: عراقي، تركي، صيني" data-origin-country-name required />
+                <label class="inventory-color-field">
+                  <span>لون المنشأ</span>
+                  <input type="color" value="#22c55e" data-origin-country-color />
+                </label>
+                <button class="button primary" type="submit">حفظ المنشأ</button>
+              </form>
+              <div class="preset-list" data-origin-country-list></div>
+            </article>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/js/api-client.js?v=20260605-auth-session"></script>
+    <script src="../assets/js/welcome.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/state.js?v=20260606-settings-sync"></script>
+    <script src="../assets/js/ui.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/media-utils.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/warehouse.js?v=20260530-arabic-utf8"></script>
+  </body>
+</html>
+

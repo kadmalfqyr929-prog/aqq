@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TOX | Smart Reports</title>
+    <script src="../assets/js/theme-bootstrap.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/interaction-core.js?v=20260530-arabic-utf8"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=20260818-contrast-theme-toggle" />
+    <link rel="stylesheet" href="../assets/css/reports-restore.css?v=20260818-clean-report-header" />
+  </head>
+  <body data-page="reports">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="../index.html"><span class="brand-mark">TOX</span><span><strong>TOX</strong><small data-i18n="brandSub">نظام مبيعات ومخزون</small></span></a>
+        <nav class="nav-list">
+          <a class="nav-link" href="../index.html" data-i18n="navCommand">Command</a>
+          <a class="nav-link" href="sales.html" data-i18n="navSales">Sales POS</a>
+          <a class="nav-link" href="products.html" data-i18n="navProducts">Products</a>
+          <a class="nav-link" href="warehouse.html" data-i18n="navWarehouse">Warehouse Hub</a>
+          <a class="nav-link" href="purchases.html" data-i18n="navPurchases">Purchases</a>
+          <a class="nav-link" href="clients.html" data-i18n="navClients">Client Ledger</a>
+          <a class="nav-link" href="suppliers.html" data-i18n="navSuppliers">Suppliers</a>
+          <a class="nav-link" href="employees.html" data-i18n="navEmployees">Employees</a>
+          <a class="nav-link active" href="reports.html" data-i18n="navReports">Smart Reports</a>
+          <a class="nav-link" href="settings.html" data-i18n="navSettings">Settings</a>
+        </nav>
+      </aside>
+
+      <main class="workspace smart-reports-2026 reports-redesign-2026 reports-dashboard-2026">
+        <header class="smart-report-hero reports-clean-hero report-dashboard-hero">
+          <div class="smart-report-title">
+            <p class="eyebrow">TOX Reports</p>
+            <h1>التقرير الذكي</h1>
+            <span>الأرباح</span>
+          </div>
+          <div class="smart-report-actions">
+            <span class="smart-report-source" data-report-data-source>مصدر البيانات: API</span>
+            <span class="smart-report-source report-live-status" data-report-live-status>التحديث الحي: جاري الاتصال</span>
+            <span class="smart-report-source report-local-link" data-report-local-link>التشغيل: فحص الرابط</span>
+            <span class="smart-report-time" data-reports-updated>جاهز للقراءة</span>
+            <div class="report-period-controls" data-report-period-controls aria-label="فترة التقرير">
+              <button class="active" type="button" data-report-period="today">اليوم</button>
+              <button type="button" data-report-period="week">هذا الأسبوع</button>
+              <button type="button" data-report-period="month">هذا الشهر</button>
+              <button type="button" data-report-period="last_month">الشهر الماضي</button>
+              <button type="button" data-report-period="year">هذه السنة</button>
+              <label><span>من</span><input type="date" data-report-start /></label>
+              <label><span>إلى</span><input type="date" data-report-end /></label>
+              <label><span>نوع البيع</span><select data-report-sale-kind><option value="all">الكل</option><option value="direct_pos">POS</option><option value="invoice">فاتورة</option><option value="installment">أقساط</option></select></label>
+              <label><span>الكلفة</span><select data-report-cost-source><option value="all">الكل</option><option value="fifo">FIFO فقط</option><option value="review">يحتاج مراجعة</option></select></label>
+              <label class="report-search-filter"><span>بحث</span><input type="search" data-report-search placeholder="منتج، عميل، فاتورة، مخزن" /></label>
+              <label><span>هامش من</span><input type="number" data-report-margin-min min="-100" max="1000" step="1" inputmode="decimal" /></label>
+              <label><span>إلى</span><input type="number" data-report-margin-max min="-100" max="1000" step="1" inputmode="decimal" /></label>
+            </div>
+            <a class="button ghost" href="../index.html">الرئيسية</a>
+            <button class="button primary" type="button" data-reports-refresh>تحديث</button>
+          </div>
+        </header>
+
+        <section class="report-filter-panel" data-report-filter-panel aria-label="فلاتر التقرير">
+          <div class="report-filter-row report-period-row">
+            <span class="report-filter-label">الفترة</span>
+            <div class="report-period-controls report-period-segment" data-report-period-controls>
+              <button class="active" type="button" data-report-period="today">اليوم</button>
+              <button type="button" data-report-period="week">هذا الأسبوع</button>
+              <button type="button" data-report-period="month">هذا الشهر</button>
+              <button type="button" data-report-period="last_month">الشهر الماضي</button>
+              <button type="button" data-report-period="year">هذه السنة</button>
+              <button type="button" data-report-period="custom">مخصص</button>
+            </div>
+          </div>
+
+          <div class="report-filter-row report-date-row">
+            <label><span>من تاريخ</span><input type="date" data-report-filter-start /></label>
+            <label><span>إلى تاريخ</span><input type="date" data-report-filter-end /></label>
+            <div class="report-segmented" role="group" aria-label="نوع البيع">
+              <span>نوع البيع</span>
+              <button type="button" class="active" data-report-filter-sale-kind="all">الكل</button>
+              <button type="button" data-report-filter-sale-kind="direct_pos">POS</button>
+              <button type="button" data-report-filter-sale-kind="invoice">فاتورة</button>
+              <button type="button" data-report-filter-sale-kind="installment">أقساط</button>
+            </div>
+            <div class="report-segmented" role="group" aria-label="مصدر الكلفة">
+              <span>مصدر الكلفة</span>
+              <button type="button" class="active" data-report-filter-cost-source="all">الكل</button>
+              <button type="button" data-report-filter-cost-source="fifo">FIFO فقط</button>
+              <button type="button" data-report-filter-cost-source="review">يحتاج مراجعة</button>
+            </div>
+          </div>
+
+          <div class="report-filter-row report-search-row">
+            <label class="report-search-filter"><span>بحث</span><input type="search" data-report-filter-search placeholder="منتج، عميل، فاتورة، مخزن" /></label>
+            <label><span>هامش من %</span><input type="number" data-report-filter-margin-min min="-100" max="1000" step="1" inputmode="decimal" /></label>
+            <label><span>إلى %</span><input type="number" data-report-filter-margin-max min="-100" max="1000" step="1" inputmode="decimal" /></label>
+            <div class="report-filter-actions">
+              <button class="button primary" type="button" data-report-filter-apply>تطبيق</button>
+              <button class="button ghost" type="button" data-report-filter-clear>مسح الفلاتر</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="erp-kpi-grid-2026 smart-kpi-strip report-primary-kpis" data-reports-kpis aria-label="مؤشرات التقرير الرئيسية"></section>
+
+        <section class="report-quick-actions" data-report-quick-actions aria-label="اختصارات التقرير">
+          <button type="button" data-report-detail="invoices">عرض الفواتير</button>
+          <button type="button" data-report-detail="profits">عرض الأرباح</button>
+          <button type="button" data-report-detail="sales">عرض المبيعات</button>
+          <button type="button" data-report-detail="topProducts">أفضل المنتجات</button>
+          <button type="button" data-report-detail="topCustomers">أفضل العملاء</button>
+          <button type="button" data-report-detail="export">تصدير التقرير</button>
+        </section>
+
+        <section class="report-dashboard-grid" aria-label="ملخص التقرير">
+          <section class="report-finance-bridge" data-report-finance-bridge aria-label="Financial links"><div class="report-finance-bridge-head"><div><p class="eyebrow">الربط المالي</p><h2>المبيعات والمرتجعات والمصروفات</h2><small>من نفس الفترة المختارة</small></div><a class="button ghost compact-action" href="finance.html">إدارة الحسابات</a></div><div class="report-finance-bridge-grid"></div></section>
+          <article class="accounting-report-panel report-chart-panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">الاتجاه</p>
+                <h2>المبيعات والربح</h2>
+                <small>حسب الفترة المختارة.</small>
+              </div>
+            </div>
+            <div class="report-chart-split">
+              <div class="report-trend-shell">
+                <div class="report-trend-head">
+                  <strong>اتجاه المبيعات</strong>
+                  <span>إيراد الفترة</span>
+                </div>
+                <div class="erp-bar-chart-2026 report-trend-chart" data-report-monthly-sales data-report-trend></div>
+              </div>
+              <div class="report-trend-shell">
+                <div class="report-trend-head">
+                  <strong>اتجاه الربح</strong>
+                  <span>مجمل الربح</span>
+                </div>
+                <div class="erp-bar-chart-2026 report-trend-chart" data-report-profit-trend></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="accounting-report-panel report-summary-panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">ملخصات ذكية</p>
+                <h2>كل التفاصيل بضغطة</h2>
+                <small>قوائم طويلة مختصرة إلى عدد، لمحة، وزر عرض.</small>
+              </div>
+            </div>
+            <div class="report-summary-grid" data-report-featured-cards></div>
+          </article>
+        </section>
+
+        <section class="reports-hidden-data-zone" hidden aria-hidden="true">
+          <div data-report-section-title></div>
+          <div data-report-section-subtitle></div>
+          <div data-report-section-metrics></div>
+          <div data-report-insights></div>
+          <div data-report-priority-actions></div>
+          <div data-report-top-products></div>
+          <div data-report-top-customers></div>
+          <div data-report-customer-debt></div>
+          <div data-report-supplier-debt></div>
+          <div data-report-low-stock></div>
+          <div data-report-installments></div>
+          <div data-report-readiness-board>
+            <span data-report-readiness-status></span>
+            <div data-report-readiness-metrics></div>
+            <div data-report-readiness-issues></div>
+          </div>
+          <div class="accounting-table-wrap" data-report-invoice-profit></div>
+          <div class="accounting-table-wrap" data-report-product-profit></div>
+          <div class="accounting-table-wrap" data-report-product-accounting></div>
+          <div class="accounting-table-wrap" data-report-stock-batches></div>
+          <div class="accounting-table-wrap" data-report-missing-costs></div>
+          <div data-report-score-ring></div>
+          <div data-report-score></div>
+          <div data-report-score-label></div>
+          <div data-report-score-summary></div>
+        </section>
+
+        <section class="report-detail-page" data-report-detail-page hidden aria-live="polite">
+          <header class="report-detail-page-head">
+            <div>
+              <p class="eyebrow" data-report-page-kicker>تفاصيل التقرير</p>
+              <h2 data-report-page-title>التفاصيل</h2>
+              <span data-report-page-subtitle>حسب الفترة المختارة.</span>
+            </div>
+            <div class="report-detail-page-actions">
+              <button class="button ghost" type="button" data-report-page-back>رجوع للتقرير</button>
+              <button class="button ghost" type="button" data-report-page-export="excel">تصدير Excel</button>
+              <button class="button primary" type="button" data-report-page-export="print">طباعة / حفظ PDF</button>
+            </div>
+          </header>
+          <div class="report-detail-page-search">
+            <label>
+              <span>بحث داخل الصفحة</span>
+              <input type="search" data-report-page-search placeholder="ابحث داخل النتائج" />
+            </label>
+          </div>
+          <div class="report-detail-page-summary" data-report-page-summary></div>
+          <div class="report-detail-page-body" data-report-page-body></div>
+        </section>
+
+        <div class="report-detail-drawer" data-report-drawer hidden>
+          <button class="report-detail-backdrop" type="button" data-report-drawer-close aria-label="إغلاق التفاصيل"></button>
+          <aside class="report-detail-panel" role="dialog" aria-modal="true" aria-labelledby="report-detail-title">
+            <header class="report-detail-header">
+              <div>
+                <p class="eyebrow" data-report-drawer-kicker>تفاصيل التقرير</p>
+                <h2 id="report-detail-title" data-report-drawer-title>التفاصيل</h2>
+                <span data-report-drawer-subtitle>حسب الفترة المختارة.</span>
+              </div>
+              <button class="button ghost compact-action" type="button" data-report-drawer-close>إغلاق</button>
+            </header>
+            <div class="report-drawer-summary" data-report-drawer-summary></div>
+            <div class="report-drawer-body" data-report-drawer-body></div>
+          </aside>
+        </div>
+      </main>
+    </div>
+
+    <script src="../assets/js/api-client.js?v=20260605-auth-session"></script>
+    <script src="../assets/js/welcome.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/state.js?v=20260606-settings-sync"></script>
+    <script src="../assets/js/ui.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/reports.js?v=20260609-installment-profit-costs"></script>
+  </body>
+</html>

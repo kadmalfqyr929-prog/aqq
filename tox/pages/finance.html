@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TOX | Finance</title>
+    <script src="../assets/js/theme-bootstrap.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/interaction-core.js?v=20260530-arabic-utf8"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=20260606-tox-classic-logo" />
+  </head>
+  <body data-page="finance">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="../index.html"><span class="brand-mark">TOX</span><span><strong>TOX</strong><small data-i18n="brandSub">نظام مبيعات ومخزون</small></span></a>
+        <nav class="nav-list">
+          <a class="nav-link" href="../index.html" data-i18n="navCommand">Command</a>
+          <a class="nav-link" href="sales.html" data-i18n="navSales">Sales</a>
+          <a class="nav-link" href="products.html" data-i18n="navProducts">Products</a>
+          <a class="nav-link" href="warehouse.html" data-i18n="navWarehouse">Warehouse</a>
+          <a class="nav-link" href="purchases.html" data-i18n="navPurchases">Purchases</a>
+          <a class="nav-link active" href="finance.html" data-i18n="navFinance">Finance</a>
+          <a class="nav-link" href="clients.html" data-i18n="navClients">Clients</a>
+          <a class="nav-link" href="suppliers.html" data-i18n="navSuppliers">Suppliers</a>
+          <a class="nav-link" href="employees.html" data-i18n="navEmployees">Employees</a>
+          <a class="nav-link" href="reports.html" data-i18n="navReports">Reports</a>
+          <a class="nav-link" href="settings.html" data-i18n="navSettings">Settings</a>
+        </nav>
+      </aside>
+
+      <main class="workspace finance-workspace">
+        <header class="topbar topbar-clean finance-hero">
+          <div>
+            <p class="eyebrow" data-i18n="financeEyebrow">Cashbox and operating ledger</p>
+            <h1 data-i18n="navFinance">Finance</h1>
+            <p class="panel-note" data-i18n="financeIntro">Track cash balance, receipts, payments, salaries, debts, and voucher movement from one page.</p>
+          </div>
+          <div class="topbar-actions">
+            <strong class="finance-rate" data-cash-rate>--</strong>
+          </div>
+        </header>
+
+        <section class="analytics-tabs-2026 finance-tabs" aria-label="تبويبات الحسابات">
+          <button class="active" type="button" data-finance-tab="cash">الصندوق</button>
+          <button type="button" data-finance-tab="debts">الديون</button>
+          <button type="button" data-finance-tab="vouchers">السندات</button>
+          <a class="button ghost compact-action" href="reports.html?period=year">التقرير الذكي</a>
+        </section>
+
+        <section class="finance-section" data-finance-panel="cash">
+          <div class="panel-head">
+            <h2 data-i18n="cashSummary">Cashbox Summary</h2>
+          </div>
+          <div class="metric-grid finance-metrics">
+            <article class="metric-card finance-metric-card" data-tone="cash">
+              <span data-i18n="cashBalance">Cash balance</span>
+              <strong data-cash-balance>--</strong>
+            </article>
+            <article class="metric-card finance-metric-card" data-tone="receipt">
+              <span data-i18n="totalReceipts">Total receipts</span>
+              <strong data-cash-receipts>--</strong>
+            </article>
+            <article class="metric-card finance-metric-card" data-tone="payment">
+              <span data-i18n="totalPayments">Total payments</span>
+              <strong data-cash-payments>--</strong>
+            </article>
+            <article class="metric-card finance-metric-card" data-tone="net">
+              <span data-i18n="estimatedNet">Estimated net</span>
+              <strong data-cash-net>--</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="finance-section" data-finance-panel="debts">
+          <div class="panel-head">
+            <h2 data-i18n="debtSummary">Debts</h2>
+            <span class="status-dot" data-i18n="todayMovement">Today Movement</span>
+          </div>
+          <div class="metric-grid finance-metrics">
+            <article class="metric-card finance-metric-card">
+              <span data-i18n="clientDebtTitle">Client debt</span>
+              <strong data-finance-client-debt>--</strong>
+            </article>
+            <article class="metric-card finance-metric-card">
+              <span data-i18n="supplierDebtTitle">Supplier debt</span>
+              <strong data-finance-supplier-debt>--</strong>
+            </article>
+            <article class="metric-card finance-metric-card">
+              <span data-i18n="todaySales">Today sales</span>
+              <strong data-today-sales-total>--</strong>
+            </article>
+            <article class="metric-card finance-metric-card">
+              <span data-i18n="todayPurchases">Today purchases</span>
+              <strong data-today-purchases-summary>--</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-grid finance-content-grid" data-finance-panel="vouchers">
+          <article class="panel finance-panel">
+            <div class="panel-head">
+              <h2 data-i18n="createVoucher">Create Cash Voucher</h2>
+            </div>
+            <form class="product-form finance-voucher-form" data-cash-voucher-form>
+              <label class="field">
+                <span data-i18n="type">Type</span>
+                <select data-cash-type>
+                  <option value="receipt" data-i18n="receipt">Receipt</option>
+                  <option value="payment" data-i18n="payment">Payment</option>
+                </select>
+              </label>
+              <label class="field"><span>تصنيف المصروف</span><select data-cash-category><option value="rent">إيجار</option><option value="utilities">كهرباء وخدمات</option><option value="tax">ضرائب</option><option value="salary">رواتب</option><option value="transport">نقل</option><option value="other">أخرى</option></select></label>
+              <label class="field">
+                <span data-i18n="amount">Amount</span>
+                <input type="number" min="0.01" step="0.01" data-cash-amount required />
+              </label>
+              <label class="field">
+                <span data-i18n="currency">Currency</span>
+                <select data-cash-currency>
+                  <option value="IQD">IQD</option>
+                  <option value="USD">USD</option>
+                </select>
+              </label>
+              <label class="field">
+                <span data-i18n="party">Party</span>
+                <input data-cash-party data-i18n-placeholder="partyPlaceholder" />
+              </label>
+              <label class="field">
+                <span data-i18n="note">Note</span>
+                <input data-cash-note data-i18n-placeholder="notePlaceholder" />
+              </label>
+              <button class="button primary" type="submit" data-i18n="save">Save</button>
+            </form>
+          </article>
+
+          <article class="panel finance-panel">
+            <div class="panel-head">
+              <h2 data-i18n="payroll">Payroll</h2>
+              <span class="status-dot" data-i18n="salaryPayments">Salary payments</span>
+            </div>
+            <div class="ledger-list finance-salary-list" data-salary-list></div>
+          </article>
+        </section>
+
+        <section class="panel finance-panel">
+          <div class="panel-head">
+            <h2 data-i18n="voucherLedger">Voucher Ledger</h2>
+            <span class="status-dot" data-cash-voucher-count>0</span>
+          </div>
+          <div class="table-wrap finance-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-i18n="date">Date</th>
+                  <th data-i18n="type">Type</th>
+                  <th data-i18n="party">Party</th>
+                  <th data-i18n="amount">Amount</th>
+                  <th data-i18n="note">Note</th>
+                </tr>
+              </thead>
+              <tbody data-cash-voucher-table></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/js/api-client.js?v=20260605-auth-session"></script>
+    <script src="../assets/js/welcome.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/state.js?v=20260606-settings-sync"></script>
+    <script src="../assets/js/ui.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/finance.js?v=20260530-arabic-utf8"></script>
+  </body>
+</html>
+

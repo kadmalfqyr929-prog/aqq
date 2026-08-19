@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>مخزوني | حسابات العملاء</title>
+    <script src="../assets/js/theme-bootstrap.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/interaction-core.js?v=20260530-arabic-utf8"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=20260606-tox-classic-logo" />
+    <link rel="stylesheet" href="../assets/css/dashboard-2026.css" />
+  </head>
+  <body data-page="clients">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="../index.html"><span class="brand-mark">TOX</span><span><strong>TOX</strong><small data-i18n="brandSub">نظام مبيعات ومخزون</small></span></a>
+        <nav class="nav-list">
+          <a class="nav-link" href="../index.html" data-i18n="navCommand">المركز الرئيسي</a>
+          <a class="nav-link" href="sales.html" data-i18n="navSales">المبيعات</a>
+          <a class="nav-link" href="products.html" data-i18n="navProducts">المنتجات</a>
+          <a class="nav-link" href="warehouse.html" data-i18n="navWarehouse">المخازن</a>
+          <a class="nav-link" href="purchases.html" data-i18n="navPurchases">المشتريات</a>
+          <a class="nav-link active" href="clients.html" data-i18n="navClients">العملاء</a>
+          <a class="nav-link" href="suppliers.html" data-i18n="navSuppliers">الموردين</a>
+          <a class="nav-link" href="employees.html" data-i18n="navEmployees">الموظفين</a>
+          <a class="nav-link" href="reports.html" data-i18n="navReports">التقارير</a>
+          <a class="nav-link" href="settings.html" data-i18n="navSettings">الإعدادات</a>
+        </nav>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar topbar-clean">
+          <div>
+            <p class="eyebrow">متابعة الديون والأقساط ودفعات العملاء</p>
+            <h1>حسابات العملاء</h1>
+          </div>
+          <div class="topbar-actions">
+            <input class="quick-search" data-client-search placeholder="بحث سريع" />
+            <button class="button primary" type="button" data-open-client-create>+ إنشاء حساب عميل</button>
+          </div>
+        </header>
+
+        <section class="panel client-create-panel">
+          <div class="panel-head">
+            <h2>العملاء</h2>
+            <span class="status-dot" data-client-count>0</span>
+          </div>
+          <form class="inline-form account-create-form hidden" data-client-form>
+            <input data-client-name placeholder="اسم العميل" required />
+            <input data-client-phone placeholder="رقم الهاتف" />
+            <input data-client-address placeholder="العنوان" />
+            <input type="number" min="0" step="0.01" data-client-opening-balance placeholder="الرصيد الافتتاحي" />
+            <select data-client-opening-type>
+              <option value="debit">دين على الزبون</option>
+              <option value="credit">رصيد لصالح الزبون</option>
+            </select>
+            <input data-client-financial-note placeholder="ملاحظات مالية" />
+            <button class="button primary" type="submit">إضافة العميل</button>
+          </form>
+        </section>
+
+        <section class="ledger-layout client-ledger-layout">
+          <div class="client-list" data-client-list></div>
+          <div class="dashboard-2026" style="flex: 1;">
+            <div data-client-profile></div>
+          </div>
+        </section>
+
+        <form class="hidden" data-client-payment-form>
+          <select data-payment-client></select>
+          <input data-payment-amount />
+          <select data-payment-currency><option value="IQD">IQD</option><option value="USD">USD</option></select>
+          <input type="date" data-payment-date />
+          <input data-payment-note />
+        </form>
+        <button class="hidden" type="button" data-payment-toggle></button>
+        <div class="hidden" data-payment-focus></div>
+      </main>
+    </div>
+
+    <script src="../assets/js/api-client.js?v=20260605-auth-session"></script>
+    <script src="../assets/js/welcome.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/state.js?v=20260606-settings-sync"></script>
+    <script src="../assets/js/ui.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/invoice-print-engine.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/clients.js"></script>
+  </body>
+</html>
+

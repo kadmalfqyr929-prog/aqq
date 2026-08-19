@@ -1,0 +1,1029 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TOX | Super Admin</title>
+    <script src="../assets/js/theme-bootstrap.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/interaction-core.js?v=20260530-arabic-utf8"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=20260606-tox-classic-logo" />
+    <style>
+      /* --- Premium Super Admin Design System --- */
+      :root {
+        --animation-timing: cubic-bezier(0.2, 0.8, 0.2, 1);
+        --sa-glass: rgba(255, 255, 255, 0.04);
+        --sa-glass-border: rgba(255, 255, 255, 0.08);
+        --sa-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+        --sa-radius: 18px;
+        --sa-accent-gradient: linear-gradient(135deg, var(--primary), var(--accent, #8b5cf6));
+      }
+
+      [data-theme="dark"] {
+        --sa-glass: rgba(0, 0, 0, 0.25);
+        --sa-glass-border: rgba(255, 255, 255, 0.06);
+        --sa-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      }
+
+      body[data-page="super-admin"] .workspace {
+        background: linear-gradient(135deg, var(--bg) 0%, var(--surface) 100%);
+      }
+
+      /* ═══════════════════════════════════════════
+         Stats Grid
+         ═══════════════════════════════════════════ */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+        margin-bottom: 28px;
+      }
+      .stat-card {
+        background: linear-gradient(145deg, rgba(var(--primary-rgb, 0, 120, 215), 0.1), rgba(var(--bg-rgb, 10, 10, 10), 0.4));
+        border: 1px solid rgba(var(--primary-rgb, 0, 120, 215), 0.2);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 16px;
+        padding: 24px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        box-shadow: var(--sa-shadow);
+        transition: transform 0.35s var(--animation-timing),
+                    box-shadow 0.35s var(--animation-timing),
+                    border-color 0.35s ease;
+        animation: slideUpFade 0.5s var(--animation-timing) backwards;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--sa-accent-gradient);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+        border-color: var(--primary);
+      }
+
+      .stat-card:hover::before {
+        opacity: 1;
+      }
+
+      .stat-card:nth-child(1) { animation-delay: 0.03s; }
+      .stat-card:nth-child(2) { animation-delay: 0.06s; }
+      .stat-card:nth-child(3) { animation-delay: 0.09s; }
+      .stat-card:nth-child(4) { animation-delay: 0.12s; }
+      .stat-card:nth-child(5) { animation-delay: 0.15s; }
+      .stat-card:nth-child(6) { animation-delay: 0.18s; }
+      .stat-card:nth-child(7) { animation-delay: 0.21s; }
+
+      .stat-card .value {
+        font-size: 2.2rem;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 6px;
+        background: var(--sa-accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .stat-card .label {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--muted);
+        letter-spacing: 0.3px;
+      }
+
+      .stat-card.stat-warning .value {
+        background: linear-gradient(135deg, #f59e0b, #ef4444);
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+
+      .stat-card.stat-danger .value {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+
+      .stat-card.stat-success .value {
+        background: linear-gradient(135deg, #10b981, #059669);
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+
+      /* ═══════════════════════════════════════════
+         Panel
+         ═══════════════════════════════════════════ */
+      .sa-panel {
+        border-radius: var(--sa-radius);
+        box-shadow: var(--sa-shadow);
+        border: 1px solid var(--line);
+        background: var(--surface);
+        animation: slideUpFade 0.5s var(--animation-timing) 0.25s backwards;
+        overflow: hidden;
+      }
+
+      .sa-panel-head {
+        background: var(--sa-glass);
+        border-bottom: 1px solid var(--line);
+        padding: 18px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .sa-panel-head h2 {
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+
+      .sa-panel-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      /* ═══════════════════════════════════════════
+         Search Bar
+         ═══════════════════════════════════════════ */
+      .sa-search-wrap {
+        position: relative;
+        min-width: 220px;
+      }
+
+      .sa-search-wrap input {
+        width: 100%;
+        padding: 10px 14px 10px 38px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--bg);
+        color: var(--fg);
+        font-size: 0.88rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        outline: none;
+      }
+
+      [dir="rtl"] .sa-search-wrap input {
+        padding: 10px 38px 10px 14px;
+      }
+
+      .sa-search-wrap svg {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--muted);
+        pointer-events: none;
+      }
+
+      [dir="rtl"] .sa-search-wrap svg {
+        left: auto;
+        right: 12px;
+      }
+
+      .sa-search-wrap input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(var(--primary-rgb, 0, 120, 215), 0.12);
+      }
+
+      /* ═══════════════════════════════════════════
+         Table
+         ═══════════════════════════════════════════ */
+      .sa-table-wrap {
+        overflow-x: auto;
+      }
+
+      .sa-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .sa-table th {
+        font-weight: 700;
+        font-size: 0.8rem;
+        letter-spacing: 0.3px;
+        color: var(--muted);
+        text-transform: uppercase;
+        padding: 14px 16px;
+        text-align: start;
+        white-space: nowrap;
+        border-bottom: 2px solid var(--line);
+      }
+
+      .sa-table td {
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.9rem;
+        vertical-align: middle;
+      }
+
+      .sa-table tbody tr {
+        transition: background-color 0.15s ease;
+      }
+
+      .sa-table tbody tr:hover {
+        background-color: rgba(var(--primary-rgb, 0, 120, 215), 0.03);
+      }
+
+      .sa-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      .sa-table .col-actions {
+        text-align: end;
+        white-space: nowrap;
+      }
+
+      /* ═══════════════════════════════════════════
+         Status Badges
+         ═══════════════════════════════════════════ */
+      .sa-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .sa-badge-active {
+        background: rgba(16, 185, 129, 0.1);
+        color: #059669;
+        border: 1px solid rgba(16, 185, 129, 0.2);
+      }
+      [data-theme="dark"] .sa-badge-active { color: #34d399; }
+
+      .sa-badge-expired {
+        background: rgba(239, 68, 68, 0.1);
+        color: #dc2626;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+      }
+      [data-theme="dark"] .sa-badge-expired { color: #f87171; }
+
+      .sa-badge-disabled {
+        background: rgba(245, 158, 11, 0.1);
+        color: #d97706;
+        border: 1px solid rgba(245, 158, 11, 0.2);
+      }
+      [data-theme="dark"] .sa-badge-disabled { color: #fbbf24; }
+
+      .sa-badge-open {
+        background: rgba(99, 102, 241, 0.1);
+        color: #4f46e5;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+      }
+      [data-theme="dark"] .sa-badge-open { color: #a5b4fc; }
+
+      .sa-badge-expiring {
+        background: rgba(251, 146, 60, 0.1);
+        color: #ea580c;
+        border: 1px solid rgba(251, 146, 60, 0.2);
+      }
+      [data-theme="dark"] .sa-badge-expiring { color: #fb923c; }
+
+      .sa-badge-role {
+        background: rgba(var(--primary-rgb, 0, 120, 215), 0.1);
+        color: var(--primary);
+        border: 1px solid rgba(var(--primary-rgb, 0, 120, 215), 0.2);
+      }
+
+      /* ═══════════════════════════════════════════
+         Action Buttons
+         ═══════════════════════════════════════════ */
+      .sa-action-group {
+        display: inline-flex;
+        gap: 5px;
+      }
+
+      .sa-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 6px 12px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--bg);
+        color: var(--fg);
+        font-size: 0.78rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+      }
+
+      .sa-btn:hover {
+        border-color: var(--primary);
+        background: rgba(var(--primary-rgb, 0, 120, 215), 0.06);
+      }
+
+      .sa-btn-renew { color: #059669; border-color: rgba(16, 185, 129, 0.3); }
+      .sa-btn-renew:hover { background: rgba(16, 185, 129, 0.08); border-color: #059669; }
+
+      .sa-btn-disable { color: #d97706; border-color: rgba(245, 158, 11, 0.3); }
+      .sa-btn-disable:hover { background: rgba(245, 158, 11, 0.08); border-color: #d97706; }
+
+      .sa-btn-enable { color: #059669; border-color: rgba(16, 185, 129, 0.3); }
+      .sa-btn-enable:hover { background: rgba(16, 185, 129, 0.08); border-color: #059669; }
+
+      .sa-btn-delete { color: #dc2626; border-color: rgba(239, 68, 68, 0.3); }
+      .sa-btn-delete:hover { background: rgba(239, 68, 68, 0.08); border-color: #dc2626; }
+
+      /* ═══════════════════════════════════════════
+         Pagination
+         ═══════════════════════════════════════════ */
+      .sa-pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 16px 24px;
+        border-top: 1px solid var(--line);
+        flex-wrap: wrap;
+      }
+
+      .sa-pagination-info {
+        font-size: 0.82rem;
+        color: var(--muted);
+        margin-inline-end: auto;
+      }
+
+      .sa-page-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 36px;
+        height: 36px;
+        padding: 0 10px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--bg);
+        color: var(--fg);
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .sa-page-btn:hover:not(:disabled) {
+        border-color: var(--primary);
+        background: rgba(var(--primary-rgb, 0, 120, 215), 0.06);
+      }
+
+      .sa-page-btn.active {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
+
+      .sa-page-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
+      /* ═══════════════════════════════════════════
+         Dialog - FIXED z-index & overlay
+         ═══════════════════════════════════════════ */
+      .sa-dialog-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 9998;
+        animation: overlayFadeIn 0.25s ease;
+      }
+
+      .sa-dialog-overlay.open {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .sa-dialog {
+        position: relative;
+        z-index: 9999;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--sa-radius);
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
+        width: 94%;
+        max-width: 500px;
+        max-height: 90vh;
+        overflow-y: auto;
+        animation: dialogSlideIn 0.35s var(--animation-timing);
+      }
+
+      .sa-dialog-header {
+        padding: 20px 24px 0;
+      }
+
+      .sa-dialog-header h3 {
+        margin: 0;
+        font-size: 1.15rem;
+        font-weight: 700;
+      }
+
+      .sa-dialog-header p {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      .sa-dialog-body {
+        padding: 16px 24px;
+      }
+
+      .sa-dialog-footer {
+        padding: 0 24px 20px;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+
+      [dir="rtl"] .sa-dialog-footer {
+        justify-content: flex-start;
+      }
+
+      /* ═══════════════════════════════════════════
+         Form Fields inside dialog
+         ═══════════════════════════════════════════ */
+      .sa-field {
+        margin-bottom: 16px;
+      }
+
+      .sa-field label {
+        display: block;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+
+      .sa-field input,
+      .sa-field select {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--bg);
+        color: var(--fg);
+        font-size: 0.9rem;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        outline: none;
+        box-sizing: border-box;
+      }
+
+      .sa-field input:focus,
+      .sa-field select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(var(--primary-rgb, 0, 120, 215), 0.12);
+      }
+
+      .sa-field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .sa-duration-presets {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+
+      .sa-preset-btn {
+        padding: 7px 14px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--bg);
+        color: var(--fg);
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .sa-preset-btn:hover,
+      .sa-preset-btn.active {
+        border-color: var(--primary);
+        background: rgba(var(--primary-rgb, 0, 120, 215), 0.08);
+        color: var(--primary);
+      }
+
+      .sa-preset-btn.active {
+        background: var(--primary);
+        color: white;
+      }
+
+      .sa-empty-state {
+        text-align: center;
+        padding: 48px 24px;
+        color: var(--muted);
+      }
+
+      .sa-empty-state svg {
+        opacity: 0.3;
+        margin-bottom: 12px;
+      }
+
+      /* ═══════════════════════════════════════════
+         Animations
+         ═══════════════════════════════════════════ */
+      @keyframes slideUpFade {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes overlayFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      @keyframes dialogSlideIn {
+        from { opacity: 0; transform: scale(0.95) translateY(-12px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+      }
+
+      /* ═══════════════════════════════════════════
+         Responsive
+         ═══════════════════════════════════════════ */
+      /* ═══════════════════════════════════════════
+         Isolated Sidebar Nav
+         ═══════════════════════════════════════════ */
+      .sidebar .sa-nav { display: flex; flex-direction: column; gap: 8px; padding: 0 16px; margin-top: 24px; }
+      .sidebar .sa-nav .nav-link { display: flex; align-items: center; padding: 12px 16px; border-radius: 12px; font-size: 0.95rem; font-weight: 600; color: var(--fg); text-decoration: none; transition: all 0.2s ease; }
+      .sidebar .sa-nav .nav-link:hover { background: rgba(var(--primary-rgb, 0, 120, 215), 0.08); color: var(--primary); }
+      .sidebar .sa-nav .nav-link.active { background: var(--primary); color: white; }
+
+      @media (max-width: 768px) {
+        .sa-panel-head { flex-direction: column; align-items: stretch; }
+        .sa-panel-actions { justify-content: flex-end; }
+        .sa-field-row { grid-template-columns: 1fr; }
+        .stats-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+        .stat-card { padding: 16px 12px; }
+        .stat-card .value { font-size: 1.6rem; }
+      }
+    </style>
+  </head>
+  <body data-page="super-admin">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#"><span class="brand-mark">TOX</span><span><strong>TOX</strong><small>Control Panel</small></span></a>
+        <nav class="sa-nav">
+          <a class="nav-link active" href="#" id="sa-tab-users" data-sa-tab="users">إدارة المشتركين</a>
+          <a class="nav-link" href="#" id="sa-tab-backup" data-sa-tab="backup">💾 نسخ النظام</a>
+          <a class="nav-link" href="#" id="logout-btn" style="color: var(--danger); margin-top: auto;">تسجيل الخروج</a>
+        </nav>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div class="topbar-left">
+            <h1 class="page-title">لوحة تحكم النظام</h1>
+          </div>
+          <div class="topbar-right" style="display: flex; align-items: center; gap: 16px;">
+             <div class="sa-user-info" style="display: flex; align-items: center; gap: 10px; background: var(--sa-glass); padding: 6px 12px; border-radius: 20px; border: 1px solid var(--line);">
+               <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px;" id="current-user-avatar">SA</div>
+               <div style="display: flex; flex-direction: column;">
+                 <strong style="font-size: 0.85rem;" id="current-username">جاري التحميل...</strong>
+                 <span style="font-size: 0.7rem; color: var(--muted);" id="current-role">سوبر أدمن • نشط</span>
+               </div>
+             </div>
+             <button class="icon-button" onclick="ToxThemes.cycle()" title="تبديل المظهر">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+             </button>
+          </div>
+        </header>
+
+        <div class="scroller fade-in">
+          <section class="container" style="padding-top: 24px; padding-bottom: 40px;">
+            <!-- Stats -->
+            <div class="stats-grid" id="stats-container">
+              <div class="stat-card" style="opacity: 0.5"><div class="value">...</div><div class="label">جاري التحميل</div></div>
+            </div>
+
+            <!-- Users Panel -->
+            <div class="sa-panel">
+              <div class="sa-panel-head">
+                <h2>إدارة المشتركين</h2>
+                <div class="sa-panel-actions">
+                  <div class="sa-search-wrap">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" id="search-input" placeholder="بحث بالاسم..." autocomplete="off" />
+                  </div>
+                  <button class="button primary" id="add-user-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-inline-end: 5px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    إضافة مشترك
+                  </button>
+                </div>
+              </div>
+
+              <div class="sa-table-wrap">
+                <table class="sa-table">
+                  <thead>
+                    <tr>
+                      <th>الاسم الكامل</th>
+                      <th>اسم المستخدم</th>
+                      <th>الدور</th>
+                      <th>تاريخ الانضمام</th>
+                      <th>بداية الاشتراك</th>
+                      <th>انتهاء الاشتراك</th>
+                      <th>الحالة</th>
+                      <th class="col-actions">إجراءات</th>
+                    </tr>
+                  </thead>
+                  <tbody id="users-tbody">
+                    <!-- Rendered by JS -->
+                  </tbody>
+                </table>
+              </div>
+
+              <div id="empty-state" class="sa-empty-state" style="display:none;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <p>لا يوجد مشتركين</p>
+              </div>
+
+              <!-- Pagination -->
+              <div class="sa-pagination" id="pagination-container" style="display:none;"></div>
+            </div>
+          </section>
+
+          <!-- ═══ Backup Section ═══ -->
+          <section id="sa-section-backup" style="display:none; padding-top: 24px; padding-bottom: 40px;" class="container">
+            <div class="sa-panel">
+              <div class="sa-panel-head">
+                <h2>💾 نسخ النظام الكامل</h2>
+                <div class="sa-panel-actions">
+                  <button class="button primary" id="sa-export-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-inline-end:6px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    تصدير نسخة كاملة
+                  </button>
+                </div>
+              </div>
+              <div style="padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                <div style="background: var(--sa-glass); border: 1px solid var(--sa-glass-border); border-radius: 14px; padding: 20px;">
+                  <div style="font-size: 2rem; margin-bottom: 8px;">🗄️</div>
+                  <div style="font-weight: 700; font-size: 1rem;">قاعدة البيانات</div>
+                  <div style="color: var(--muted); font-size: 0.82rem; margin-top: 4px;">كل البيانات والفواتير</div>
+                </div>
+                <div style="background: var(--sa-glass); border: 1px solid var(--sa-glass-border); border-radius: 14px; padding: 20px;">
+                  <div style="font-size: 2rem; margin-bottom: 8px;">👥</div>
+                  <div style="font-weight: 700; font-size: 1rem;">المشتركين</div>
+                  <div style="color: var(--muted); font-size: 0.82rem; margin-top: 4px;">تفاصيل الحسابات والصلاحيات</div>
+                </div>
+                <div style="background: var(--sa-glass); border: 1px solid var(--sa-glass-border); border-radius: 14px; padding: 20px;">
+                  <div style="font-size: 2rem; margin-bottom: 8px;">📋</div>
+                  <div style="font-weight: 700; font-size: 1rem;">الإعدادات</div>
+                  <div style="color: var(--muted); font-size: 0.82rem; margin-top: 4px;">كل إعدادات النظام</div>
+                </div>
+                <div style="background: var(--sa-glass); border: 1px solid var(--sa-glass-border); border-radius: 14px; padding: 20px;">
+                  <div style="font-size: 2rem; margin-bottom: 8px;">💰</div>
+                  <div style="font-weight: 700; font-size: 1rem;">المالية</div>
+                  <div style="color: var(--muted); font-size: 0.82rem; margin-top: 4px;">الفواتير والمدفوعات</div>
+                </div>
+              </div>
+              <div style="padding: 0 20px;" id="sa-export-status"></div>
+            </div>
+
+            <div class="sa-panel" style="margin-top: 20px;">
+              <div class="sa-panel-head">
+                <h2>♻️ استرجاع نسخة</h2>
+                <div class="sa-panel-actions">
+                  <label class="button ghost" for="sa-restore-file" style="cursor:pointer;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-inline-end:6px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    اختيار ملف JSON
+                  </label>
+                  <input type="file" id="sa-restore-file" accept="application/json,.json" style="display:none;" />
+                </div>
+              </div>
+              <div style="padding: 20px;">
+                <div id="sa-restore-preview" style="display:none; background: var(--sa-glass); border: 1px solid var(--sa-glass-border); border-radius: 14px; padding: 20px; margin-bottom: 16px;">
+                  <h3 style="margin: 0 0 12px; font-size: 1rem;">تفاصيل النسخة</h3>
+                  <div id="sa-restore-details" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;"></div>
+                  <div style="margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="button primary" id="sa-restore-confirm-btn">تأكيد الاسترجاع</button>
+                    <button class="button ghost" id="sa-restore-cancel-btn">إلغاء</button>
+                  </div>
+                </div>
+                <div id="sa-restore-status"></div>
+                <div style="color: var(--muted); font-size: 0.82rem; padding: 12px; background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2); border-radius: 10px;">
+                  ⚠️ سيتم إنشاء نسخة أمان تلقائية قبل الاسترجاع. هذا الإجراء سيحل محل جميع بيانات النظام الحالي.
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         Create User Dialog
+         ═══════════════════════════════════════════ -->
+    <div class="sa-dialog-overlay" id="create-overlay">
+      <div class="sa-dialog">
+        <div class="sa-dialog-header">
+          <h3>إضافة مشترك جديد</h3>
+          <p>إنشاء حساب مدير جديد في النظام</p>
+        </div>
+        <form id="create-form" autocomplete="off">
+          <div class="sa-dialog-body">
+            <div class="sa-field-row">
+              <div class="sa-field">
+                <label for="cf-username">اسم المستخدم</label>
+                <input type="text" id="cf-username" name="username" required autocomplete="off" placeholder="أدخل اسم المستخدم" />
+              </div>
+              <div class="sa-field">
+                <label for="cf-full-name">الاسم الكامل</label>
+                <input type="text" id="cf-full-name" name="full_name" placeholder="أدخل الاسم الكامل" />
+              </div>
+            </div>
+            <div class="sa-field">
+              <label for="cf-password">كلمة المرور</label>
+              <input type="password" id="cf-password" name="password" required autocomplete="new-password" placeholder="أدخل كلمة المرور" />
+            </div>
+
+            <div class="sa-field">
+              <label>مدة الاشتراك</label>
+              <div class="sa-duration-presets" id="duration-presets">
+                <button type="button" class="sa-preset-btn" data-days="30">شهر</button>
+                <button type="button" class="sa-preset-btn" data-days="90">3 أشهر</button>
+                <button type="button" class="sa-preset-btn" data-days="180">6 أشهر</button>
+                <button type="button" class="sa-preset-btn active" data-days="365">سنة</button>
+                <button type="button" class="sa-preset-btn" data-days="custom">مخصص</button>
+                <button type="button" class="sa-preset-btn" data-days="0">مفتوح</button>
+              </div>
+            </div>
+
+            <div class="sa-field-row">
+              <div class="sa-field">
+                <label for="cf-start-date">تاريخ البداية</label>
+                <input type="date" id="cf-start-date" name="start_date" />
+              </div>
+              <div class="sa-field">
+                <label for="cf-end-date">تاريخ الانتهاء</label>
+                <input type="date" id="cf-end-date" name="end_date" />
+              </div>
+            </div>
+          </div>
+          <div class="sa-dialog-footer">
+            <button type="button" class="button" id="create-cancel-btn">إلغاء</button>
+            <button type="submit" class="button primary">إنشاء الحساب</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         Renew Dialog
+         ═══════════════════════════════════════════ -->
+    <div class="sa-dialog-overlay" id="renew-overlay">
+      <div class="sa-dialog">
+        <div class="sa-dialog-header">
+          <h3>تجديد الاشتراك</h3>
+          <p>تجديد اشتراك المستخدم: <strong id="renew-username-display"></strong></p>
+        </div>
+        <form id="renew-form">
+          <input type="hidden" name="user_id" id="renew-user-id" />
+          <div class="sa-dialog-body">
+            <div class="sa-field">
+              <label>فترة التجديد</label>
+              <div class="sa-duration-presets" id="renew-presets">
+                <button type="button" class="sa-preset-btn" data-days="30">شهر</button>
+                <button type="button" class="sa-preset-btn" data-days="90">3 أشهر</button>
+                <button type="button" class="sa-preset-btn" data-days="180">6 أشهر</button>
+                <button type="button" class="sa-preset-btn active" data-days="365">سنة</button>
+                <button type="button" class="sa-preset-btn" data-days="custom">مخصص</button>
+              </div>
+            </div>
+            <div class="sa-field" id="renew-custom-field" style="display:none;">
+              <label for="rf-end-date">تاريخ الانتهاء الجديد</label>
+              <input type="date" id="rf-end-date" name="new_end_date" />
+            </div>
+            <div id="renew-info" style="padding: 12px; border-radius: 12px; background: var(--sa-glass); border: 1px solid var(--line); font-size: 0.85rem; color: var(--muted);"></div>
+          </div>
+          <div class="sa-dialog-footer">
+            <button type="button" class="button" id="renew-cancel-btn">إلغاء</button>
+            <button type="submit" class="button primary">تجديد</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         Change Password Dialog
+         ═══════════════════════════════════════════ -->
+    <div class="sa-dialog-overlay" id="password-overlay">
+      <div class="sa-dialog">
+        <div class="sa-dialog-header">
+          <h3>تغيير كلمة المرور</h3>
+          <p>تغيير كلمة المرور للمستخدم: <strong id="password-username-display"></strong></p>
+        </div>
+        <form id="password-form">
+          <input type="hidden" name="user_id" id="password-user-id" />
+          <div class="sa-dialog-body">
+            <div class="sa-field">
+              <label for="pf-new-password">كلمة المرور الجديدة</label>
+              <input type="password" id="pf-new-password" name="new_password" required autocomplete="new-password" placeholder="أدخل كلمة المرور الجديدة" />
+            </div>
+          </div>
+          <div class="sa-dialog-footer">
+            <button type="button" class="button" id="password-cancel-btn">إلغاء</button>
+            <button type="submit" class="button primary">تغيير</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="../assets/js/api-client.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/state.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/ui.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/super-admin.js?v=20260808-redesign"></script>
+    <script>
+    /* ── Super Admin Tab Navigation ── */
+    (function() {
+      var usersSection = document.querySelector('.container[style*="padding-top"]') ||
+                         document.getElementById('users-tbody')?.closest('section');
+      var backupSection = document.getElementById('sa-section-backup');
+      var tabUsers = document.getElementById('sa-tab-users');
+      var tabBackup = document.getElementById('sa-tab-backup');
+
+      function switchTab(tab) {
+        if (tab === 'backup') {
+          if (usersSection) usersSection.style.display = 'none';
+          if (backupSection) backupSection.style.display = 'block';
+          if (tabUsers) tabUsers.classList.remove('active');
+          if (tabBackup) tabBackup.classList.add('active');
+        } else {
+          if (usersSection) usersSection.style.display = '';
+          if (backupSection) backupSection.style.display = 'none';
+          if (tabUsers) tabUsers.classList.add('active');
+          if (tabBackup) tabBackup.classList.remove('active');
+        }
+      }
+
+      if (tabUsers) tabUsers.addEventListener('click', function(e) { e.preventDefault(); switchTab('users'); });
+      if (tabBackup) tabBackup.addEventListener('click', function(e) { e.preventDefault(); switchTab('backup'); });
+
+      /* ── Backup API Base ── */
+      var backupApiBase = (window.ToxApi && window.ToxApi.baseUrl) ? window.ToxApi.baseUrl() : (window.location.origin.includes(':5500') ? 'http://127.0.0.1:8765/api' : '/api');
+
+      function saFetch(path, opts) {
+        var headers = Object.assign({ 'Content-Type': 'application/json' }, (window.ToxAuth && window.ToxAuth.authHeaders) ? window.ToxAuth.authHeaders() : {});
+        if (opts && opts.body) delete headers['Content-Type'];
+        return fetch(backupApiBase + path, Object.assign({ credentials: 'include', headers: headers }, opts));
+      }
+
+      function showStatus(el, msg, type) {
+        var colors = { success: 'var(--green, #22c55e)', error: 'var(--danger, #ef4444)', info: 'var(--primary)' };
+        el.innerHTML = '<div style="padding: 12px 16px; border-radius: 10px; margin-top: 12px; background: var(--sa-glass); border: 1px solid ' + (colors[type] || colors.info) + '; color: ' + (colors[type] || colors.info) + '; font-size: 0.88rem;">' + msg + '</div>';
+      }
+
+      /* ── EXPORT ── */
+      var exportBtn = document.getElementById('sa-export-btn');
+      var exportStatus = document.getElementById('sa-export-status');
+      if (exportBtn && exportStatus) {
+        exportBtn.addEventListener('click', function() {
+          exportBtn.disabled = true;
+          exportBtn.textContent = 'جاري التصدير...';
+          showStatus(exportStatus, 'جاري تجهيز النسخة الكاملة للتنزيل...', 'info');
+          saFetch('/backup/', { method: 'GET' })
+            .then(function(res) {
+              if (!res.ok) return res.json().then(function(d) { throw new Error(d.message || d.detail || 'فشل التصدير'); });
+              var cd = res.headers.get('Content-Disposition') || '';
+              var match = cd.match(/filename="?([^"]+)"?/);
+              var filename = match ? match[1] : ('tox-system-backup-' + new Date().toISOString().slice(0,10) + '.json');
+              return res.blob().then(function(blob) { return { blob: blob, filename: filename }; });
+            })
+            .then(function(obj) {
+              var url = URL.createObjectURL(obj.blob);
+              var a = document.createElement('a');
+              a.href = url;
+              a.download = obj.filename;
+              a.click();
+              URL.revokeObjectURL(url);
+              showStatus(exportStatus, '✅ تم تصدير النسخة الكاملة بنجاح: ' + obj.filename, 'success');
+            })
+            .catch(function(err) {
+              showStatus(exportStatus, '❌ ' + (err.message || 'تعذر التصدير'), 'error');
+            })
+            .finally(function() {
+              exportBtn.disabled = false;
+              exportBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-inline-end:6px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>تصدير نسخة كاملة';
+            });
+        });
+      }
+
+      /* ── RESTORE ── */
+      var restoreFile = document.getElementById('sa-restore-file');
+      var restorePreview = document.getElementById('sa-restore-preview');
+      var restoreDetails = document.getElementById('sa-restore-details');
+      var restoreConfirm = document.getElementById('sa-restore-confirm-btn');
+      var restoreCancel = document.getElementById('sa-restore-cancel-btn');
+      var restoreStatus = document.getElementById('sa-restore-status');
+      var pendingRestoreFile = null;
+
+      function formatDetail(label, value, icon) {
+        return '<div style="background: var(--sa-glass); border: 1px solid var(--sa-glass-border); border-radius: 10px; padding: 14px;"><div style="font-size:1.3rem">' + (icon||'📦') + '</div><div style="font-weight:700;font-size:0.95rem;margin-top:4px">' + value + '</div><div style="color:var(--muted);font-size:0.78rem">' + label + '</div></div>';
+      }
+
+      if (restoreFile) {
+        restoreFile.addEventListener('change', function(e) {
+          var file = e.target.files[0];
+          if (!file) return;
+          pendingRestoreFile = file;
+          var reader = new FileReader();
+          reader.onload = function(ev) {
+            try {
+              var data = JSON.parse(ev.target.result);
+              var meta = data.manifest || {};
+              var counts = meta.recordCounts || {};
+              var users = counts.auth_user || 0;
+              var invoices = counts.erp_invoice || 0;
+              var products = counts.erp_product || 0;
+              var clients = counts.erp_client || 0;
+              var exportedAt = meta.createdAt || meta.exportedAt || '';
+              var version = meta.appVersion || meta.version || '-';
+              restoreDetails.innerHTML =
+                formatDetail('تاريخ النسخة', exportedAt ? new Date(exportedAt).toLocaleDateString('ar-IQ', {year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '-', '📅') +
+                formatDetail('المشتركين', users, '👥') +
+                formatDetail('الفواتير', invoices, '🧾') +
+                formatDetail('المنتجات', products, '📦') +
+                formatDetail('العملاء', clients, '🧑') +
+                formatDetail('الإصدار', version, '🔖');
+              restorePreview.style.display = 'block';
+              if (restoreStatus) restoreStatus.innerHTML = '';
+            } catch(err) {
+              if (restoreStatus) showStatus(restoreStatus, '❌ ملف JSON غير صالح أو تالف', 'error');
+              pendingRestoreFile = null;
+              restoreFile.value = '';
+              restorePreview.style.display = 'none';
+            }
+          };
+          reader.readAsText(file);
+        });
+      }
+
+      if (restoreCancel) {
+        restoreCancel.addEventListener('click', function() {
+          pendingRestoreFile = null;
+          if (restoreFile) restoreFile.value = '';
+          if (restorePreview) restorePreview.style.display = 'none';
+          if (restoreStatus) restoreStatus.innerHTML = '';
+        });
+      }
+
+      if (restoreConfirm) {
+        restoreConfirm.addEventListener('click', function() {
+          if (!pendingRestoreFile) return;
+          if (!confirm('⚠️ هذا الإجراء سيحل محل كل بيانات النظام الحالي بالنسخة المختارة.\n\nهل أنت متأكد؟')) return;
+          restoreConfirm.disabled = true;
+          restoreConfirm.textContent = 'جاري الاسترجاع...';
+          showStatus(restoreStatus, 'جاري رفع النسخة واسترجاعها...', 'info');
+          var formData = new FormData();
+          formData.append('backup_file', pendingRestoreFile);
+          var headers = (window.ToxAuth && window.ToxAuth.authHeaders) ? window.ToxAuth.authHeaders() : {};
+          fetch(backupApiBase + '/backup/restore/', {
+            method: 'POST',
+            credentials: 'include',
+            headers: headers,
+            body: formData
+          })
+          .then(function(res) {
+            return res.json().then(function(d) { return { ok: res.ok, data: d }; });
+          })
+          .then(function(result) {
+            if (!result.ok) throw new Error(result.data.message || result.data.detail || 'فشل الاسترجاع');
+            showStatus(restoreStatus, '✅ تم الاسترجاع بنجاح! سيتم تحديث الصفحة...', 'success');
+            setTimeout(function() { window.location.reload(); }, 2500);
+          })
+          .catch(function(err) {
+            showStatus(restoreStatus, '❌ ' + (err.message || 'تعذر الاسترجاع'), 'error');
+            restoreConfirm.disabled = false;
+            restoreConfirm.textContent = 'تأكيد الاسترجاع';
+          });
+        });
+      }
+    })();
+    </script>
+  </body>
+</html>
+

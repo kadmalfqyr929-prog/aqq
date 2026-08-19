@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TOX | المرتجعات</title>
+    <script src="../assets/js/theme-bootstrap.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/interaction-core.js?v=20260530-arabic-utf8"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=20260818-returns-filters" />
+  </head>
+  <body data-page="returns">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="../index.html"><span class="brand-mark">TOX</span><span><strong>TOX</strong><small data-i18n="brandSub">نظام مبيعات ومخزون</small></span></a>
+        <nav class="nav-list"></nav>
+      </aside>
+
+      <main class="workspace returns-page">
+        <header class="topbar topbar-clean returns-topbar">
+          <div>
+            <p class="eyebrow" data-return-eyebrow>إرجاع مضبوط على الفاتورة الأصلية</p>
+            <h1 data-return-title>مرتجعات مبيعات</h1>
+          </div>
+          <div class="topbar-actions">
+            <div class="segmented page-mode-tabs">
+              <a class="button primary" href="returns.html#sales" data-return-mode-link="sales">مرتجعات مبيعات</a>
+              <a class="button ghost" href="returns.html#purchases" data-return-mode-link="purchases">مرتجعات شراء</a>
+            </div>
+          </div>
+        </header>
+
+        <!-- KPIs -->
+        <section class="metric-grid returns-kpis">
+          <article class="metric-card">
+            <span>عدد المرتجعات</span>
+            <strong data-return-count>0</strong>
+          </article>
+          <article class="metric-card">
+            <span>إجمالي المرتجع</span>
+            <strong data-return-total>0 د.ع</strong>
+          </article>
+          <article class="metric-card danger">
+            <span>مرتجع تالف</span>
+            <strong data-return-damaged>0</strong>
+          </article>
+          <article class="metric-card">
+            <span>نتائج البحث</span>
+            <strong data-return-source-count>0</strong>
+          </article>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════
+             STEP 1: البحث عن الفاتورة الأصلية
+        ════════════════════════════════════════════════════════ -->
+        <section class="panel returns-search-panel">
+          <div class="panel-head">
+            <div class="returns-search-step-badge">1</div>
+            <h2 data-return-source-heading>البحث عن فاتورة البيع الأصلية</h2>
+            <span class="status-dot" data-return-source-status>أدخل بحثاً أو اختر فترة زمنية</span>
+          </div>
+
+          <!-- فلاتر ذكية -->
+          <div class="report-filter-panel returns-smart-filters" aria-label="فلاتر البحث عن الفواتير">
+            <div class="returns-filter-heading">
+              <div><strong>فلترة الفواتير الأصلية</strong><span>حدّد الفترة ثم ابحث برقم الفاتورة أو اسم الجهة أو المنتج</span></div>
+              <span class="returns-filter-hint">نتائج قابلة للإرجاع</span>
+            </div>
+            <div class="returns-filter-grid">
+              <!-- الفترة الزمنية -->
+              <div class="returns-filter-control returns-filter-period">
+                <span class="returns-filter-label">الفترة</span>
+                <div class="report-period-controls report-period-segment" data-return-period-group>
+                <button type="button" class="active" data-src-period="today">اليوم</button>
+                <button type="button" data-src-period="yesterday">أمس</button>
+                <button type="button" data-src-period="week">الأسبوع</button>
+                <button type="button" data-src-period="month">الشهر</button>
+                <button type="button" data-src-period="year">السنة</button>
+                <button type="button" data-src-period="all">الكل</button>
+                <button type="button" data-src-period="custom">مخصص</button>
+                </div>
+              </div>
+
+              <!-- نوع الفاتورة -->
+              <div class="returns-filter-control" data-src-kind-row>
+                <span class="returns-filter-label">نوع البيع</span>
+                <div class="report-segmented" data-src-kind-group>
+                <button type="button" class="active" data-src-kind="all">الكل</button>
+                <button type="button" data-src-kind="direct_pos">POS</button>
+                <button type="button" data-src-kind="invoice">فاتورة</button>
+                <button type="button" data-src-kind="installment">أقساط</button>
+                </div>
+              </div>
+
+              <!-- حالة المرتجع -->
+              <div class="returns-filter-control">
+                <span class="returns-filter-label">حالة الفاتورة</span>
+                <div class="report-segmented" data-src-status-group>
+                <button type="button" class="active" data-src-status="all">الكل</button>
+                <button type="button" data-src-status="returnable">قابل للإرجاع</button>
+                <button type="button" data-src-status="partial">جزئي</button>
+                <button type="button" data-src-status="full">كامل</button>
+                </div>
+              </div>
+
+              <div class="returns-filter-search">
+                <label class="report-search-filter returns-search-field">
+                  <span class="returns-filter-label" data-return-search-label>بحث برقم الفاتورة، العميل، المنتج، الباركود</span>
+                <input type="search" data-return-search placeholder="بحث برقم الفاتورة، العميل، المنتج، الباركود..." autocomplete="off" />
+              </label>
+              <button type="button" class="button primary" data-src-search-btn>بحث</button>
+              <button type="button" data-src-search-clear hidden style="background: transparent; border: none; font-size: 1.2rem; cursor: pointer; color: var(--danger); margin-inline-start: 8px;">✕</button>
+              </div>
+            
+            <!-- تاريخ مخصص -->
+            <div class="returns-custom-dates returns-filter-control" data-src-custom-dates hidden>
+              <label class="field">
+                <span>من</span>
+                <input type="date" data-src-date-from />
+              </label>
+              <label class="field">
+                <span>إلى</span>
+                <input type="date" data-src-date-to />
+              </label>
+            </div>
+
+            </div>
+          </div>
+
+          <!-- نتائج البحث -->
+          <div class="returns-source-results" data-return-source-results>
+            <div class="returns-source-list" data-return-source-list></div>
+            <div class="warehouse-empty" data-return-source-empty hidden>
+              لا توجد فواتير مطابقة. جرب تعديل الفلاتر.
+            </div>
+            <div class="returns-source-loading" data-return-source-loading hidden>
+              <span class="spinner"></span> جاري البحث...
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════
+             STEP 2: تفاصيل المرتجع (تظهر بعد اختيار فاتورة)
+        ════════════════════════════════════════════════════════ -->
+        <section class="panel returns-form-panel" data-return-form-panel>
+          <div class="panel-head">
+            <div class="returns-search-step-badge">2</div>
+            <h2 data-return-form-heading>تفاصيل المرتجع</h2>
+            <span class="status-dot" data-return-selected-status>لم يتم اختيار فاتورة</span>
+          </div>
+
+          <div class="returns-source-summary" data-return-source-summary>
+            <span>اختر فاتورة أصلية من نتائج البحث أعلاه حتى تظهر المنتجات القابلة للإرجاع.</span>
+          </div>
+
+          <div class="table-wrap returns-lines-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>المنتج</th>
+                  <th>الكمية الأصلية</th>
+                  <th>مرتجع سابقاً</th>
+                  <th>المتاح للإرجاع</th>
+                  <th>كمية المرتجع</th>
+                  <th data-return-condition-head>الحالة</th>
+                  <th>المبلغ</th>
+                </tr>
+              </thead>
+              <tbody data-return-lines></tbody>
+            </table>
+          </div>
+
+          <div class="returns-settlement-grid">
+            <label class="field">
+              <span>طريقة التسوية</span>
+              <select data-return-settlement>
+                <option value="credit">تخفيض دين / رصيد</option>
+                <option value="cash">إرجاع نقدي</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>سبب الإرجاع</span>
+              <input data-return-reason placeholder="مثلاً: تبديل، عيب، خطأ بالفاتورة" />
+            </label>
+            <label class="field returns-note-field">
+              <span>ملاحظة</span>
+              <input data-return-note placeholder="ملاحظة اختيارية تظهر في السجل والوصل" />
+            </label>
+          </div>
+
+          <section class="returns-review-panel" data-return-review>
+            <div>
+              <span>أثر المخزون</span>
+              <strong data-return-stock-impact>اختر كمية مرتجعة</strong>
+            </div>
+            <div>
+              <span>أثر الذمة</span>
+              <strong data-return-ledger-impact>لا توجد تسوية بعد</strong>
+            </div>
+            <div>
+              <span>الأصناف المحددة</span>
+              <strong data-return-selected-lines>0 صنف</strong>
+            </div>
+          </section>
+
+          <div class="returns-total-row">
+            <span>إجمالي المرتجع</span>
+            <strong data-return-current-total>0 د.ع</strong>
+          </div>
+
+          <div class="toolbar returns-actions">
+            <button class="button ghost" type="button" data-return-reset>مسح</button>
+            <button class="button ghost" type="button" data-return-print disabled>طباعة وصل مرتجع</button>
+            <button class="button primary" type="button" data-return-save>حفظ المرتجع</button>
+          </div>
+          <div class="panel-note returns-status" data-return-status></div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════
+             STEP 3: سجل المرتجعات (مع فلاتر)
+        ════════════════════════════════════════════════════════ -->
+        <section class="panel returns-history-panel">
+          <div class="panel-head">
+            <h2 data-return-history-heading>سجل مرتجعات المبيعات</h2>
+            <span class="status-dot">آخر تحديث <b data-return-updated>--</b></span>
+          </div>
+
+          <div class="report-filter-panel returns-filter-bar">
+            <div class="returns-filter-heading returns-history-filter-heading">
+              <div><strong>بحث سريع في السجل</strong><span data-return-history-filter-description>فلترة المرتجعات المسجلة بحسب التاريخ ونوع البيع</span></div>
+            </div>
+            <div class="returns-filter-grid returns-history-filter-grid">
+              <div class="returns-filter-control returns-filter-period">
+                <span class="returns-filter-label">الفترة</span>
+                <div class="report-period-controls report-period-segment" data-return-filter-period-group>
+                <button type="button" class="active" data-return-filter-period="today">اليوم</button>
+                <button type="button" data-return-filter-period="week">الأسبوع</button>
+                <button type="button" data-return-filter-period="month">الشهر</button>
+                <button type="button" data-return-filter-period="year">السنة</button>
+                <button type="button" data-return-filter-period="all">الكل</button>
+                </div>
+              </div>
+              <div class="returns-filter-control" data-return-filter-kind-group>
+                <span class="returns-filter-label">نوع البيع</span>
+                <div class="report-segmented">
+                <button type="button" class="active" data-return-filter-kind="all">الكل</button>
+                <button type="button" data-return-filter-kind="direct_pos">POS</button>
+                <button type="button" data-return-filter-kind="invoice">فاتورة</button>
+                <button type="button" data-return-filter-kind="installment">أقساط</button>
+                </div>
+              </div>
+              <div class="returns-filter-search returns-history-search">
+              <label class="report-search-filter">
+                <span class="returns-filter-label">ابحث في السجل</span>
+                <input type="search" data-return-history-search placeholder="بحث في سجل المرتجعات برقم أو اسم..." />
+              </label>
+              <button type="button" class="button ghost returns-filter-clear" data-return-history-clear hidden>مسح البحث</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>رقم المرتجع</th>
+                  <th>الفاتورة الأصلية</th>
+                  <th>الجهة</th>
+                  <th>الأصناف</th>
+                  <th>التسوية</th>
+                  <th>المبلغ</th>
+                  <th>التاريخ</th>
+                  <th>إجراء</th>
+                </tr>
+              </thead>
+              <tbody data-return-history></tbody>
+            </table>
+          </div>
+          <div class="warehouse-empty" data-return-history-empty hidden>لا توجد مرتجعات مسجلة بعد.</div>
+        </section>
+
+        <section class="returns-print-area" data-return-receipt hidden></section>
+      </main>
+    </div>
+
+    <script src="../assets/js/api-client.js?v=20260605-auth-session"></script>
+    <script src="../assets/js/welcome.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/state.js?v=20260606-settings-sync"></script>
+    <script src="../assets/js/ui.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/returns.js?v=20260818-returns-filters"></script>
+  </body>
+</html>

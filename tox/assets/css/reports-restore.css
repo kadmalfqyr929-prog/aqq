@@ -1,0 +1,382 @@
+/* Scoped reports repair: prevents the hero controls from squeezing the title. */
+body[data-page="reports"] .reports-dashboard-2026.smart-reports-2026 {
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .reports-clean-hero,
+body[data-page="reports"] .reports-dashboard-2026 .report-primary-kpis,
+body[data-page="reports"] .reports-dashboard-2026 .report-quick-actions,
+body[data-page="reports"] .reports-dashboard-2026 .report-dashboard-grid {
+  width: min(1180px, 100%);
+  max-width: 100%;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .reports-clean-hero {
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+  align-items: start;
+  gap: 18px;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .smart-report-title {
+  min-width: 0;
+  max-width: 340px;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .smart-report-title h1 {
+  font-size: clamp(2rem, 3vw, 2.75rem);
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .smart-report-title span {
+  display: block;
+  max-width: 32ch;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .smart-report-actions {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(128px, 1fr));
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .smart-report-source,
+body[data-page="reports"] .reports-dashboard-2026 .smart-report-time,
+body[data-page="reports"] .reports-dashboard-2026 .smart-report-actions .button {
+  width: 100%;
+  min-width: 0;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .report-local-link {
+  direction: ltr;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .report-period-controls {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(104px, 1fr));
+  min-width: 0;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .report-period-controls button,
+body[data-page="reports"] .reports-dashboard-2026 .report-period-controls label {
+  min-width: 0;
+  justify-content: center;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .report-period-controls input {
+  width: 100%;
+  min-width: 0;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .erp-kpi-card-2026,
+body[data-page="reports"] .reports-dashboard-2026 .report-feature-card,
+body[data-page="reports"] .reports-dashboard-2026 .accounting-report-panel {
+  min-width: 0;
+}
+
+@media (max-width: 1180px) {
+  body[data-page="reports"] .reports-dashboard-2026 .reports-clean-hero,
+  body[data-page="reports"] .reports-dashboard-2026 .smart-report-actions,
+  body[data-page="reports"] .reports-dashboard-2026 .report-period-controls,
+  body[data-page="reports"] .reports-dashboard-2026 .report-dashboard-grid,
+  body[data-page="reports"] .reports-dashboard-2026 .report-chart-split {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-page="reports"] .reports-dashboard-2026 .smart-report-title {
+    max-width: none;
+  }
+
+  body[data-page="reports"] .reports-dashboard-2026 .smart-report-title span {
+    max-width: 64ch;
+  }
+}
+
+@media (max-width: 720px) {
+  body[data-page="reports"] .reports-dashboard-2026 .report-primary-kpis,
+  body[data-page="reports"] .reports-dashboard-2026 .report-summary-grid,
+  body[data-page="reports"] .reports-dashboard-2026 .report-quick-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Focused report command surface: one filter area, larger readable cards, clean print action. */
+body[data-page="reports"] .reports-dashboard-2026.smart-reports-2026 {
+  --report-max-width: 1320px;
+  padding: clamp(18px, 2.2vw, 32px);
+  gap: 18px;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .reports-clean-hero,
+body[data-page="reports"] .reports-dashboard-2026 .report-filter-panel,
+body[data-page="reports"] .reports-dashboard-2026 .report-primary-kpis,
+body[data-page="reports"] .reports-dashboard-2026 .report-quick-actions,
+body[data-page="reports"] .reports-dashboard-2026 .report-dashboard-grid {
+  width: min(var(--report-max-width), 100%);
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .reports-clean-hero {
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 24px 26px;
+  border-radius: 16px;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .smart-report-title h1 {
+  font-size: clamp(2.35rem, 4vw, 3.65rem);
+  letter-spacing: -0.04em;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .smart-report-actions {
+  max-width: 300px;
+  align-content: start;
+}
+
+/* The hero used to repeat the entire filter form. The dedicated panel below owns filters now. */
+body[data-page="reports"] .reports-dashboard-2026 .smart-report-actions .report-period-controls {
+  display: none !important;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .report-filter-panel {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid color-mix(in srgb, var(--report-score) 28%, var(--report-border));
+  border-radius: 16px;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--report-card) 96%, var(--report-score) 4%), var(--report-card-2));
+  box-shadow: 0 18px 44px color-mix(in srgb, var(--report-score) 9%, transparent);
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .report-period-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .report-period-segment {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .report-period-segment button {
+  min-height: 44px;
+  border-radius: 10px;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .report-date-row,
+body[data-page="reports"] .reports-dashboard-2026 .report-search-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .report-segmented {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid var(--report-border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--report-card-2) 86%, transparent);
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .report-segmented span {
+  width: 100%;
+  color: var(--report-muted);
+  font-size: .74rem;
+  font-weight: 900;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .report-segmented button {
+  flex: 1;
+  min-height: 34px;
+  border: 1px solid var(--report-border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--report-text);
+  font-weight: 900;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .report-primary-kpis {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .erp-kpi-card-2026 {
+  min-height: 158px;
+  padding: 20px;
+  border-radius: 14px;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .erp-kpi-card-2026 strong {
+  font-size: clamp(1.85rem, 2.4vw, 2.45rem);
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .report-finance-bridge {
+  padding: 20px;
+  border-radius: 16px;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .report-finance-bridge-grid {
+  gap: 12px;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .report-finance-bridge-card {
+  min-height: 122px;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+body[data-page="reports"] .reports-dashboard-2026 .report-quick-actions button {
+  min-height: 48px;
+  border-radius: 11px;
+}
+
+@media (max-width: 1050px) {
+  body[data-page="reports"] .reports-dashboard-2026 .report-period-row,
+  body[data-page="reports"] .reports-dashboard-2026 .report-date-row,
+  body[data-page="reports"] .reports-dashboard-2026 .report-search-row {
+    grid-template-columns: 1fr;
+  }
+  body[data-page="reports"] .reports-dashboard-2026 .report-period-segment,
+  body[data-page="reports"] .reports-dashboard-2026 .report-primary-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media print {
+  body[data-page="reports"] .sidebar,
+  body[data-page="reports"] .report-filter-panel,
+  body[data-page="reports"] .report-quick-actions,
+  body[data-page="reports"] .reports-clean-hero,
+  body[data-page="reports"] .report-finance-bridge,
+  body[data-page="reports"] [data-reports-kpis],
+  body[data-page="reports"] .reports-hidden-data-zone {
+    display: none !important;
+  }
+}
+/* Final clean report header: title only, centered, with no status-chip clutter. */
+body[data-page="reports"] .reports-clean-hero,
+body[data-page="reports"] .report-dashboard-hero {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 230px;
+  padding: 34px 42px;
+}
+
+body[data-page="reports"] .reports-clean-hero .smart-report-title {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  align-items: center;
+}
+
+body[data-page="reports"] .reports-clean-hero .smart-report-title h1 {
+  margin: 0;
+  white-space: nowrap;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+body[data-page="reports"] .reports-clean-hero .smart-report-title > span {
+  display: none !important;
+}
+
+body[data-page="reports"] .reports-clean-hero .smart-report-actions,
+body[data-page="reports"] .reports-clean-hero .smart-report-actions > *,
+body[data-page="reports"] .reports-clean-hero .smart-report-source,
+body[data-page="reports"] .reports-clean-hero .smart-report-time {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+@media (max-width: 700px) {
+  body[data-page="reports"] .reports-clean-hero .smart-report-title h1 {
+    white-space: normal;
+    font-size: clamp(2.35rem, 13vw, 3.8rem);
+  }
+}
+
+/* Dark reports: a quiet black surface with deliberate contrast for Arabic text. */
+[data-theme-mode="dark"][data-theme] body[data-page="reports"] .reports-dashboard-2026.smart-reports-2026,
+[data-theme="noir"] body[data-page="reports"] .reports-dashboard-2026.smart-reports-2026,
+[data-theme="matte-black"] body[data-page="reports"] .reports-dashboard-2026.smart-reports-2026,
+[data-theme="graphite-lime"] body[data-page="reports"] .reports-dashboard-2026.smart-reports-2026,
+[data-theme="violet-night"] body[data-page="reports"] .reports-dashboard-2026.smart-reports-2026 {
+  --report-bg: #090909;
+  --report-card: #111111;
+  --report-card-2: #181818;
+  --report-border: rgba(255, 255, 255, 0.14);
+  --report-text: #f5f5f3;
+  --report-muted: #c3c5c2;
+  --report-shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+  background: var(--report-bg);
+}
+
+[data-theme-mode="dark"][data-theme] body[data-page="reports"] .reports-dashboard-2026 .report-filter-panel,
+[data-theme-mode="dark"][data-theme] body[data-page="reports"] .reports-dashboard-2026 .report-segmented,
+[data-theme-mode="dark"][data-theme] body[data-page="reports"] .reports-dashboard-2026 .report-trend-shell,
+[data-theme="noir"] body[data-page="reports"] .reports-dashboard-2026 .report-filter-panel,
+[data-theme="noir"] body[data-page="reports"] .reports-dashboard-2026 .report-segmented,
+[data-theme="noir"] body[data-page="reports"] .reports-dashboard-2026 .report-trend-shell,
+[data-theme="matte-black"] body[data-page="reports"] .reports-dashboard-2026 .report-filter-panel,
+[data-theme="matte-black"] body[data-page="reports"] .reports-dashboard-2026 .report-segmented,
+[data-theme="matte-black"] body[data-page="reports"] .reports-dashboard-2026 .report-trend-shell,
+[data-theme="graphite-lime"] body[data-page="reports"] .reports-dashboard-2026 .report-filter-panel,
+[data-theme="graphite-lime"] body[data-page="reports"] .reports-dashboard-2026 .report-segmented,
+[data-theme="graphite-lime"] body[data-page="reports"] .reports-dashboard-2026 .report-trend-shell,
+[data-theme="violet-night"] body[data-page="reports"] .reports-dashboard-2026 .report-filter-panel,
+[data-theme="violet-night"] body[data-page="reports"] .reports-dashboard-2026 .report-segmented,
+[data-theme="violet-night"] body[data-page="reports"] .reports-dashboard-2026 .report-trend-shell {
+  background: var(--report-card-2);
+}
+
+[data-theme-mode="dark"][data-theme] body[data-page="reports"] .reports-dashboard-2026 input,
+[data-theme-mode="dark"][data-theme] body[data-page="reports"] .reports-dashboard-2026 select,
+[data-theme="noir"] body[data-page="reports"] .reports-dashboard-2026 input,
+[data-theme="noir"] body[data-page="reports"] .reports-dashboard-2026 select,
+[data-theme="matte-black"] body[data-page="reports"] .reports-dashboard-2026 input,
+[data-theme="matte-black"] body[data-page="reports"] .reports-dashboard-2026 select,
+[data-theme="graphite-lime"] body[data-page="reports"] .reports-dashboard-2026 input,
+[data-theme="graphite-lime"] body[data-page="reports"] .reports-dashboard-2026 select,
+[data-theme="violet-night"] body[data-page="reports"] .reports-dashboard-2026 input,
+[data-theme="violet-night"] body[data-page="reports"] .reports-dashboard-2026 select {
+  border-color: var(--report-border);
+  background: #101010;
+  color: var(--report-text);
+}
+
+[data-theme-mode="dark"][data-theme] body[data-page="reports"] .reports-dashboard-2026 .report-period-controls button.active,
+[data-theme-mode="dark"][data-theme] body[data-page="reports"] .reports-dashboard-2026 .report-segmented button.active,
+[data-theme-mode="dark"][data-theme] body[data-page="reports"] .reports-dashboard-2026 .report-filter-actions .button.primary,
+[data-theme="noir"] body[data-page="reports"] .reports-dashboard-2026 .report-period-controls button.active,
+[data-theme="noir"] body[data-page="reports"] .reports-dashboard-2026 .report-segmented button.active,
+[data-theme="noir"] body[data-page="reports"] .reports-dashboard-2026 .report-filter-actions .button.primary,
+[data-theme="matte-black"] body[data-page="reports"] .reports-dashboard-2026 .report-period-controls button.active,
+[data-theme="matte-black"] body[data-page="reports"] .reports-dashboard-2026 .report-segmented button.active,
+[data-theme="matte-black"] body[data-page="reports"] .reports-dashboard-2026 .report-filter-actions .button.primary,
+[data-theme="graphite-lime"] body[data-page="reports"] .reports-dashboard-2026 .report-period-controls button.active,
+[data-theme="graphite-lime"] body[data-page="reports"] .reports-dashboard-2026 .report-segmented button.active,
+[data-theme="graphite-lime"] body[data-page="reports"] .reports-dashboard-2026 .report-filter-actions .button.primary,
+[data-theme="violet-night"] body[data-page="reports"] .reports-dashboard-2026 .report-period-controls button.active,
+[data-theme="violet-night"] body[data-page="reports"] .reports-dashboard-2026 .report-segmented button.active,
+[data-theme="violet-night"] body[data-page="reports"] .reports-dashboard-2026 .report-filter-actions .button.primary {
+  border-color: #f5f5f3;
+  background: #f5f5f3;
+  color: #111111;
+}

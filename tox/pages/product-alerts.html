@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TOX | تنبيهات المنتجات</title>
+    <script src="../assets/js/theme-bootstrap.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/interaction-core.js?v=20260530-arabic-utf8"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=20260606-tox-classic-logo" />
+  </head>
+  <body data-page="product-alerts">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="../index.html"><span class="brand-mark">TOX</span><span><strong>TOX</strong><small data-i18n="brandSub">نظام مبيعات ومخزون</small></span></a>
+        <nav class="nav-list"></nav>
+      </aside>
+
+      <main class="workspace product-alerts-page">
+        <header class="topbar topbar-clean">
+          <div>
+            <p class="eyebrow">متابعة المخزون وجودة بيانات المنتجات</p>
+            <h1 data-i18n="navProductAlerts">تنبيهات المنتجات</h1>
+          </div>
+          <div class="topbar-actions">
+            <div class="smart-search-shell module-search">
+              <span>بحث التنبيهات</span>
+              <div class="smart-search-control">
+                <label class="smart-search-pill">
+                  <i class="smart-search-icon" aria-hidden="true"></i>
+                  <input class="quick-search" data-alert-search placeholder="ابحث في التنبيهات" />
+                </label>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="alert-filterbar">
+          <label class="field">
+            <span>المستودع</span>
+            <select data-alert-warehouse></select>
+          </label>
+          <label class="field">
+            <span>نوع التنبيه</span>
+            <select data-alert-type>
+              <option value="all">كل التنبيهات</option>
+              <option value="out">نفاد المخزون</option>
+              <option value="low">مخزون منخفض</option>
+              <option value="expiry">صلاحية</option>
+              <option value="barcode">بلا باركود</option>
+              <option value="image">بلا صورة</option>
+            </select>
+          </label>
+        </section>
+
+        <section class="metric-grid product-alert-kpis">
+          <article class="metric-card danger"><span>نفاد المخزون</span><strong data-alert-count="out">0</strong></article>
+          <article class="metric-card danger"><span>مخزون منخفض</span><strong data-alert-count="low">0</strong></article>
+          <article class="metric-card danger"><span>صلاحية</span><strong data-alert-count="expiry">0</strong></article>
+          <article class="metric-card"><span>بلا باركود</span><strong data-alert-count="barcode">0</strong></article>
+          <article class="metric-card"><span>بلا صورة</span><strong data-alert-count="image">0</strong></article>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>قائمة التنبيهات</h2>
+            <span class="status-dot" data-alert-total>0</span>
+          </div>
+          <div class="product-alert-list" data-alert-list></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/js/api-client.js?v=20260605-auth-session"></script>
+    <script src="../assets/js/welcome.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/state.js?v=20260606-settings-sync"></script>
+    <script src="../assets/js/ui.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/product-alerts.js?v=20260530-arabic-utf8"></script>
+  </body>
+</html>
+

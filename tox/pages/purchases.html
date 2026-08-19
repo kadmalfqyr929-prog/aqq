@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TOX | عمليات الشراء</title>
+    <script src="../assets/js/theme-bootstrap.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/interaction-core.js?v=20260530-arabic-utf8"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=20260610-purchase-product-results-fix" />
+  </head>
+  <body data-page="purchases">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="../index.html"><span class="brand-mark">TOX</span><span><strong>TOX</strong><small data-i18n="brandSub">نظام مبيعات ومخزون</small></span></a>
+        <nav class="nav-list">
+          <a class="nav-link" href="../index.html" data-i18n="navCommand">المركز الرئيسي</a>
+          <a class="nav-link" href="sales.html" data-i18n="navSales">عمليات البيع</a>
+          <a class="nav-link" href="products.html" data-i18n="navProducts">المنتجات</a>
+          <a class="nav-link" href="warehouse.html" data-i18n="navWarehouse">المخزون</a>
+          <a class="nav-link active" href="purchases.html" data-i18n="navPurchases">عمليات الشراء</a>
+          <a class="nav-link" href="clients.html" data-i18n="navClients">العملاء</a>
+          <a class="nav-link" href="suppliers.html" data-i18n="navSuppliers">الموردين</a>
+          <a class="nav-link" href="employees.html" data-i18n="navEmployees">الموظفين</a>
+          <a class="nav-link" href="reports.html" data-i18n="navReports">التقارير الذكية</a>
+          <a class="nav-link" href="settings.html" data-i18n="navSettings">الإعدادات</a>
+        </nav>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar topbar-clean">
+          <div>
+            <p class="eyebrow" data-i18n="purchaseEyebrow" data-purchase-page-eyebrow>شراء واستلام مخزون</p>
+            <h1 data-i18n="purchaseTitle" data-purchase-page-title>عمليات الشراء</h1>
+          </div>
+          <div class="topbar-actions purchase-topbar-actions">
+            <input class="quick-search purchase-global-search" data-purchase-search placeholder="بحث سريع" />
+          </div>
+        </header>
+
+        <section class="metric-grid">
+          <article class="metric-card">
+            <span data-i18n="purchaseTotal">إجمالي الشراء</span>
+            <strong data-purchase-total>$0</strong>
+          </article>
+          <article class="metric-card danger">
+            <span data-i18n="purchaseDebt">ديون الشراء</span>
+            <strong data-purchase-debt>$0</strong>
+          </article>
+          <article class="metric-card">
+            <span data-i18n="qty">الكمية</span>
+            <strong data-purchase-qty>0</strong>
+          </article>
+          <article class="metric-card">
+            <span data-i18n="invoiceCount">الفواتير</span>
+            <strong data-purchase-count>0</strong>
+          </article>
+        </section>
+
+        <section class="purchase-layout purchase-workspace">
+          <div class="panel purchase-entry-panel">
+            <div class="panel-head">
+              <h2 data-i18n="newPurchase" data-purchase-panel-title>استلام مخزون</h2>
+              <span class="status-dot" data-purchase-date>اليوم</span>
+            </div>
+            <form class="product-form compact-form purchase-line-form" data-purchase-line-form>
+              <label class="field purchase-warehouse-field">
+                <span data-i18n="warehouse">المخزن</span>
+                <select data-purchase-warehouse required></select>
+              </label>
+              <div class="field purchase-product-field">
+                <span data-i18n="product">المنتج</span>
+                <input class="quick-search" data-purchase-product-search placeholder="ابحث باسم المنتج أو الباركود" />
+                <select class="purchase-product-native" data-purchase-product aria-hidden="true" tabindex="-1"></select>
+                <div class="purchase-product-results" data-purchase-product-results></div>
+                <div class="purchase-product-pager" data-purchase-product-pager hidden></div>
+                <div class="product-choice-preview" data-purchase-product-preview hidden></div>
+              </div>
+              <label class="field">
+                <span data-i18n="unit">الوحدة</span>
+                <select data-purchase-unit required></select>
+              </label>
+              <label class="field">
+                <span data-i18n="qty">الكمية</span>
+                <input type="number" min="0.01" step="0.01" value="1" data-purchase-qty-input required />
+              </label>
+              <label class="field">
+                <span data-i18n="purchaseCost">كلفة الوحدة</span>
+                <input type="number" min="0" step="0.01" value="0" data-purchase-unit-cost required />
+              </label>
+              <label class="field">
+                <span>مصاريف السطر</span>
+                <input type="number" min="0" step="0.01" value="0" data-purchase-line-cost />
+              </label>
+              <label class="field">
+                <span>خصم السطر</span>
+                <input type="number" min="0" step="0.01" value="0" data-purchase-line-discount />
+              </label>
+              <label class="field">
+                <span>رقم الدفعة</span>
+                <input data-purchase-batch-code placeholder="اختياري" />
+              </label>
+              <label class="field">
+                <span>تاريخ الاستلام</span>
+                <input type="date" data-purchase-received-at />
+              </label>
+              <label class="field">
+                <span>تاريخ الصلاحية</span>
+                <input type="date" data-purchase-expiry-date />
+              </label>
+              <label class="field">
+                <span data-i18n="expiryDays">أيام الصلاحية</span>
+                <input type="number" min="0" step="1" value="0" data-purchase-expiry />
+              </label>
+              <div class="purchase-cost-preview" data-purchase-cost-preview></div>
+              <button class="button primary" type="submit" data-i18n="addToInvoice">إضافة للفاتورة</button>
+            </form>
+
+            <div class="table-wrap purchase-cart-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th data-i18n="product">المنتج</th>
+                    <th data-i18n="warehouse">المخزن</th>
+                    <th data-i18n="qty">الكمية</th>
+                    <th data-i18n="purchaseCost">كلفة الوحدة</th>
+                    <th>كلفة الأساس</th>
+                    <th data-i18n="total">الإجمالي</th>
+                    <th data-i18n="expiryDate">الصلاحية</th>
+                    <th>الحالة</th>
+                    <th data-i18n="actions">إجراء</th>
+                  </tr>
+                </thead>
+                <tbody data-purchase-cart></tbody>
+              </table>
+            </div>
+          </div>
+
+          <aside class="panel summary-panel purchase-summary-panel">
+            <h2 data-i18n="settlement" data-purchase-summary-title>التسوية</h2>
+            <label class="field" data-purchase-supplier-block>
+              <span data-i18n="supplier" data-purchase-supplier-label>المورد</span>
+              <select data-purchase-supplier></select>
+            </label>
+            <label class="field" data-purchase-formal>
+              <span>عنوان فاتورة الشراء</span>
+              <input data-purchase-title placeholder="فاتورة شراء" />
+            </label>
+            <div class="price-inspector" data-purchase-supplier-card data-purchase-supplier-block>
+              <span data-i18n="supplier">المورد</span>
+              <strong>--</strong>
+              <small>--</small>
+            </div>
+            <label class="field">
+              <span data-i18n="currency">العملة</span>
+              <select data-purchase-currency>
+                <option value="IQD">IQD</option>
+                <option value="USD">USD</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>مصاريف الشراء</span>
+              <input type="number" min="0" step="0.01" value="0" data-purchase-landed-cost />
+              <small>تتوزع على الأصناف حسب قيمة السطر.</small>
+            </label>
+            <label class="field">
+              <span>خصم الفاتورة</span>
+              <input type="number" min="0" step="0.01" value="0" data-purchase-discount />
+              <small>يقلل كلفة الدفعات بنفس نسبة توزيع الشراء.</small>
+            </label>
+            <div class="summary-row"><span data-i18n="subtotal">المجموع الفرعي</span><strong data-purchase-subtotal>$0</strong></div>
+            <label class="field" data-purchase-formal>
+              <span data-i18n="paidNow">المدفوع الآن</span>
+              <input type="number" min="0" step="0.01" value="0" data-purchase-paid />
+            </label>
+            <div class="summary-row debt" data-purchase-formal><span data-i18n="debt">الدين</span><strong data-purchase-balance>$0</strong></div>
+            <label class="field" data-purchase-formal>
+              <span data-i18n="note">ملاحظة</span>
+              <input data-purchase-note placeholder="ملاحظات فاتورة الشراء" />
+            </label>
+            <a class="button ghost full" href="suppliers.html" data-purchase-formal>إدارة الموردين</a>
+            <button class="button ghost full" type="button" data-export-purchase-draft data-purchase-formal data-i18n="exportDraft">تصدير مسودة</button>
+            <button class="button ghost full" type="button" data-print-purchase data-purchase-formal data-i18n="printInvoice">طباعة الفاتورة</button>
+            <button class="button ghost full" type="button" data-suspend-purchase data-purchase-formal data-i18n="suspendInvoice">تعليق الفاتورة</button>
+            <button class="button primary full" type="button" data-finalize-purchase data-i18n="addPurchase">إضافة فاتورة شراء</button>
+          </aside>
+        </section>
+
+        <section class="panel suspended-panel purchase-suspended-panel" data-purchase-formal>
+          <div class="panel-head">
+            <h2 data-i18n="suspendedInvoices">الفواتير المعلقة</h2>
+            <span class="status-dot" data-purchase-suspended-count>0</span>
+          </div>
+          <div class="ledger-list" data-purchase-suspended-list></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2 data-i18n="purchaseLedger">سجل الشراء</h2>
+            <span class="status-dot" data-purchase-ledger-count>0</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-i18n="invoice">الفاتورة</th>
+                  <th data-i18n="supplier">المورد</th>
+                  <th data-i18n="fullDetails">التفاصيل</th>
+                  <th data-i18n="total">الإجمالي</th>
+                  <th data-i18n="paidNow">المدفوع</th>
+                  <th data-i18n="debt">الدين</th>
+                </tr>
+              </thead>
+              <tbody data-purchase-table></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/js/api-client.js?v=20260605-auth-session"></script>
+    <script src="../assets/js/welcome.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/state.js?v=20260606-settings-sync"></script>
+    <script src="../assets/js/ui.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/invoice-print-engine.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/purchases.js?v=20260610-purchase-product-click-fix"></script>
+  </body>
+</html>
+

@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TOX | Settings</title>
+    <script src="../assets/js/theme-bootstrap.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/interaction-core.js?v=20260530-arabic-utf8"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=20260606-tox-classic-logo" />
+  </head>
+  <body data-page="settings">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="../index.html"><span class="brand-mark">TOX</span><span><strong>TOX</strong><small data-i18n="brandSub">نظام مبيعات ومخزون</small></span></a>
+        <nav class="nav-list">
+          <a class="nav-link" href="../index.html" data-i18n="navCommand">Command</a>
+          <a class="nav-link" href="sales.html" data-i18n="navSales">Sales POS</a>
+          <a class="nav-link" href="products.html" data-i18n="navProducts">Products</a>
+          <a class="nav-link" href="warehouse.html" data-i18n="navWarehouse">Warehouse Hub</a>
+          <a class="nav-link" href="purchases.html" data-i18n="navPurchases">Purchases</a>
+          <a class="nav-link" href="clients.html" data-i18n="navClients">Client Ledger</a>
+          <a class="nav-link" href="suppliers.html" data-i18n="navSuppliers">Suppliers</a>
+          <a class="nav-link" href="employees.html" data-i18n="navEmployees">Employees</a>
+          <a class="nav-link" href="reports.html" data-i18n="navReports">Smart Reports</a>
+          <a class="nav-link active" href="settings.html" data-i18n="navSettings">Settings</a>
+        </nav>
+      </aside>
+
+      <main class="workspace settings-workspace settings-console">
+        <header class="topbar settings-topbar settings-console-topbar">
+          <div>
+            <p class="eyebrow" data-i18n="settingsEyebrow">سلوك النظام والتفضيلات</p>
+            <h1 data-i18n="settingsTitle">الإعدادات</h1>
+            <span class="settings-topbar-subtitle">مركز تحكم واحد للواجهة، الفواتير، الصلاحيات، والبيانات.</span>
+          </div>
+          <div class="settings-status-grid" data-settings-status-grid data-settings-command-bar>
+            <button class="settings-status-card settings-theme-command" type="button" data-settings-popover-trigger="theme" aria-expanded="false">
+              <span class="settings-command-copy">
+                <span data-i18n="settingsThemeButton">ثيم</span>
+                <strong data-theme-summary>TOX Blue</strong>
+                <small data-theme-mode-summary>أساسي فاتح</small>
+              </span>
+              <span class="theme-summary-chips" data-theme-summary-chips aria-hidden="true">
+                <i></i><i></i><i></i>
+              </span>
+            </button>
+            <button class="settings-status-card" type="button" data-settings-popover-trigger="language" aria-expanded="false">
+              <span data-i18n="settingsLanguageButton">اللغة</span>
+              <strong data-language-summary>العربية</strong>
+            </button>
+            <button class="settings-status-card" type="button" data-settings-popover-trigger="currency" aria-expanded="false">
+              <span data-i18n="settingsCurrencyButton">العملة وسعر الصرف</span>
+              <strong><span data-currency-summary>IQD</span> / <span data-rate-summary>1 USD = 1460 IQD</span></strong>
+            </button>
+            <button class="settings-status-card" type="button" data-settings-popover-trigger="sound" aria-expanded="false">
+              <span data-i18n="settingsSoundButton">الصوت</span>
+              <strong data-sound-summary>85%</strong>
+            </button>
+          </div>
+        </header>
+
+        <section class="settings-popover hidden" data-settings-popover="theme">
+          <div class="settings-popover-head">
+            <span class="eyebrow" data-i18n="settingsThemeKicker">الثيم</span>
+            <strong data-i18n="settingsThemeTitle">اختر شكل الواجهة</strong>
+          </div>
+          <div class="theme-choice-groups" data-theme-choice-row>
+            <section class="theme-choice-group theme-choice-group-primary">
+              <div class="theme-choice-group-head">
+                <strong data-i18n="themePrimaryGroup">الثيمات الأساسية</strong>
+                <small data-i18n="themePrimaryGroupDesc">اختيار يومي سريع: أبيض أو أسود</small>
+              </div>
+              <div class="theme-choice-row compact theme-choice-row-featured">
+                <button class="theme-choice settings-theme-tile settings-theme-tile-featured" type="button" data-theme-choice="tox-blue" data-theme-card-mode="light">
+                  <span class="theme-swatch theme-swatch-white"></span>
+                  <span><strong>White</strong><small data-i18n="themePrimaryLight">أساسي فاتح</small></span>
+                  <em data-i18n="themePrimaryBadge">أساسي</em>
+                </button>
+                <button class="theme-choice settings-theme-tile settings-theme-tile-featured" type="button" data-theme-choice="noir" data-theme-card-mode="dark">
+                  <span class="theme-swatch theme-swatch-noir"></span>
+                  <span><strong>Black</strong><small data-i18n="themePrimaryDark">أساسي داكن</small></span>
+                  <em data-i18n="themePrimaryBadge">أساسي</em>
+                </button>
+              </div>
+            </section>
+
+            <section class="theme-choice-group">
+              <div class="theme-choice-group-head">
+                <strong data-i18n="themeSecondaryLightGroup">ثيمات فاتحة ثانوية</strong>
+                <small data-i18n="themeSecondaryLightDesc">ألوان عمل فاتحة حسب ذوق النظام</small>
+              </div>
+              <div class="theme-choice-row compact">
+                <button class="theme-choice settings-theme-tile" type="button" data-theme-choice="summer-orange" data-theme-card-mode="light">
+                  <span class="theme-swatch theme-swatch-summer"></span>
+                  <span><strong>Summer Orange</strong><small>#f97316</small></span>
+                </button>
+                <button class="theme-choice settings-theme-tile" type="button" data-theme-choice="emerald-ledger" data-theme-card-mode="light">
+                  <span class="theme-swatch theme-swatch-emerald"></span>
+                  <span><strong>Emerald Ledger</strong><small>#047857</small></span>
+                </button>
+                <button class="theme-choice settings-theme-tile" type="button" data-theme-choice="ruby-slate" data-theme-card-mode="light">
+                  <span class="theme-swatch theme-swatch-ruby"></span>
+                  <span><strong>Ruby Slate</strong><small>#e11d48</small></span>
+                </button>
+                <button class="theme-choice settings-theme-tile" type="button" data-theme-choice="amethyst-control" data-theme-card-mode="light">
+                  <span class="theme-swatch theme-swatch-amethyst"></span>
+                  <span><strong>Amethyst Control</strong><small>#7c3aed</small></span>
+                </button>
+              </div>
+            </section>
+
+            <section class="theme-choice-group">
+              <div class="theme-choice-group-head">
+                <strong data-i18n="themeSecondaryDarkGroup">ثيمات داكنة ثانوية</strong>
+                <small data-i18n="themeSecondaryDarkDesc">داكنة بتباين أعلى للعمل الطويل</small>
+              </div>
+              <div class="theme-choice-row compact">
+                <button class="theme-choice settings-theme-tile" type="button" data-theme-choice="matte-black" data-theme-card-mode="dark">
+                  <span class="theme-swatch theme-swatch-matte"></span>
+                  <span><strong>Matte Black</strong><small>#121212</small></span>
+                </button>
+                <button class="theme-choice settings-theme-tile" type="button" data-theme-choice="graphite-lime" data-theme-card-mode="dark">
+                  <span class="theme-swatch theme-swatch-graphite"></span>
+                  <span><strong>Graphite Lime</strong><small>#84cc16</small></span>
+                </button>
+                <button class="theme-choice settings-theme-tile" type="button" data-theme-choice="violet-night" data-theme-card-mode="dark">
+                  <span class="theme-swatch theme-swatch-violet"></span>
+                  <span><strong>Violet Night</strong><small>#8b5cf6</small></span>
+                </button>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="settings-popover hidden" data-settings-popover="language">
+          <div class="settings-popover-head">
+            <span class="eyebrow" data-i18n="language">اللغة</span>
+            <strong data-i18n="settingsLanguageButton">اللغة</strong>
+          </div>
+          <div class="settings-choice-row compact" data-language-choice-row>
+            <button class="settings-choice" type="button" data-language-choice="ar" data-i18n="languageArabic">العربية</button>
+            <button class="settings-choice" type="button" data-language-choice="en" data-i18n="languageEnglish">English</button>
+          </div>
+        </section>
+
+        <section class="settings-popover hidden" data-settings-popover="currency">
+          <div class="settings-popover-head">
+            <span class="eyebrow" data-i18n="currency">العملة</span>
+            <strong data-i18n="settingsCurrencyButton">العملة وسعر الصرف</strong>
+          </div>
+          <div class="settings-choice-row compact" data-currency-choice-row>
+            <button class="settings-choice" type="button" data-currency-choice="IQD">IQD</button>
+            <button class="settings-choice" type="button" data-currency-choice="USD">USD</button>
+          </div>
+          <label class="settings-rate-control">
+            <span>1 USD =</span>
+            <input type="number" min="1" step="1" data-settings-rate />
+            <span>IQD</span>
+          </label>
+        </section>
+
+        <section class="settings-popover hidden" data-settings-popover="sound">
+          <div class="settings-popover-head">
+            <span class="eyebrow">POS AUDIO</span>
+            <strong data-i18n="settingsSoundTitle">إعدادات الأصوات</strong>
+          </div>
+          <label class="settings-sound-toggle compact">
+            <input type="checkbox" data-sound-enabled />
+            <span data-i18n="settingsSoundEnabled">تشغيل أصوات النظام</span>
+          </label>
+          <label class="field compact-field">
+            <span data-i18n="settingsSoundVolume">مستوى الصوت</span>
+            <input type="range" min="0" max="100" step="1" data-sound-volume />
+          </label>
+          <div class="settings-sound-preview compact">
+            <button type="button" data-sound-preview="press" title="ضغط" aria-label="ضغط">P</button>
+            <button type="button" data-sound-preview="select" title="اختيار" aria-label="اختيار">S</button>
+            <button type="button" data-sound-preview="success" title="نجاح" aria-label="نجاح">OK</button>
+            <button type="button" data-sound-preview="sale" title="بيع" aria-label="بيع">IQD</button>
+            <button type="button" data-sound-preview="error" title="خطأ" aria-label="خطأ">!</button>
+            <button type="button" data-sound-preview="print" title="طباعة" aria-label="طباعة">PR</button>
+          </div>
+        </section>
+
+        <section class="settings-control-hero">
+          <div>
+            <span class="eyebrow">TOX ERP CONTROL</span>
+            <h2 data-i18n="settingsHeroTitle">إعدادات النظام</h2>
+            <p data-i18n="settingsHeroText">كل إعداد مهم مصنف حسب المهمة: الواجهة، هوية المتجر، الأمان، البيانات، والمساعدة.</p>
+          </div>
+          <div class="settings-chip-row">
+            <span data-theme-summary>TOX Blue</span>
+            <span data-invoice-print-summary>رسمي A4</span>
+            <span data-rate-summary>1 USD = 1460 IQD</span>
+          </div>
+        </section>
+
+        <section class="settings-page-section settings-section-card" data-settings-section="appearance">
+          <div class="settings-section-head compact">
+            <div>
+              <span class="eyebrow">APPEARANCE</span>
+              <h2>الواجهة والتفضيلات</h2>
+            </div>
+            <p>تغيير شكل النظام، اللغة، العملة، والصوت من مكان واضح بدون زحمة.</p>
+          </div>
+          <div class="settings-control-grid">
+            <button class="settings-control-card settings-theme-command" type="button" data-settings-popover-trigger="theme" aria-expanded="false">
+              <span class="settings-control-icon">UI</span>
+              <span class="settings-control-copy"><small>الثيم الحالي</small><strong data-theme-summary>TOX Blue</strong><em data-theme-mode-summary>أساسي فاتح</em></span>
+              <span class="theme-summary-chips" data-theme-summary-chips aria-hidden="true"><i></i><i></i><i></i></span>
+            </button>
+            <button class="settings-control-card" type="button" data-settings-popover-trigger="language" aria-expanded="false">
+              <span class="settings-control-icon">ع</span>
+              <span class="settings-control-copy"><small>لغة الواجهة</small><strong data-language-summary>العربية</strong><em>تطبيق مباشر</em></span>
+            </button>
+            <button class="settings-control-card" type="button" data-settings-popover-trigger="currency" aria-expanded="false">
+              <span class="settings-control-icon">IQD</span>
+              <span class="settings-control-copy"><small>العملة وسعر الصرف</small><strong><span data-currency-summary>IQD</span> / <span data-rate-summary>1 USD = 1460 IQD</span></strong><em>يؤثر على كل القيم</em></span>
+            </button>
+            <button class="settings-control-card" type="button" data-settings-popover-trigger="sound" aria-expanded="false">
+              <span class="settings-control-icon">S</span>
+              <span class="settings-control-copy"><small>الصوت</small><strong data-sound-summary>85%</strong><em>تنبيهات وعمليات البيع</em></span>
+            </button>
+          </div>
+        </section>
+
+        <section class="settings-page-section settings-section-card" data-settings-section="brand-print">
+          <div class="settings-section-head compact">
+            <div>
+              <span class="eyebrow">BRAND & PRINT</span>
+              <h2>هوية المتجر والفواتير</h2>
+            </div>
+            <p>كل ما يظهر للعميل: بيانات المتجر، تصميم الفاتورة، وطريقة أرباح الأقساط.</p>
+          </div>
+          <div class="settings-control-grid three">
+            <button class="settings-control-card" type="button" data-open-business-drawer>
+              <span class="settings-control-icon">TOX</span>
+              <span class="settings-control-copy"><small>معلومات المتجر</small><strong data-business-summary>TOX</strong><em>الاسم، الهاتف، العنوان</em></span>
+            </button>
+            <button class="settings-control-card" type="button" data-open-invoice-print-drawer>
+              <span class="settings-control-icon">A4</span>
+              <span class="settings-control-copy"><small>خصائص الفاتورة</small><strong data-invoice-print-summary>رسمي A4</strong><em>الشعار، القالب، التذييل</em></span>
+            </button>
+            <button class="settings-control-card" type="button" data-open-installment-profit-drawer>
+              <span class="settings-control-icon">%</span>
+              <span class="settings-control-copy"><small>أرباح الأقساط</small><strong data-installment-profit-summary>0%</strong><em>نسبة أو مبلغ ثابت</em></span>
+            </button>
+            <label class="settings-control-card settings-toggle-card">
+              <span class="settings-control-icon">IQD</span>
+              <span class="settings-control-copy"><small>تسعير المنتجات</small><strong data-product-pricing-summary>منع البيع بخسارة</strong><em>الهامش المنخفض تحذير فقط</em></span>
+              <input type="checkbox" data-settings-sale-loss-toggle />
+            </label>
+          </div>
+        </section>
+
+        <section class="settings-page-section settings-section-card" data-settings-section="security">
+          <div class="settings-section-head compact">
+            <div>
+              <span class="eyebrow" data-i18n="settingsAccessKicker">الجلسة والسجلات</span>
+              <h2 data-i18n="settingsAccessTitle">الأمان والمستخدمون</h2>
+            </div>
+            <p data-i18n="settingsAccessText">تابع المستخدم الحالي، صلاحيات الموظفين، وسجلات الدخول والعمليات.</p>
+          </div>
+          <section class="settings-system-grid">
+            <article class="panel settings-session-panel">
+              <div>
+                <span class="eyebrow" data-i18n="settingsSessionKicker">جلسة الدخول</span>
+                <h2 data-current-user-name>حالة المستخدم</h2>
+                <p data-current-user-meta>إذا لم تظهر بياناتك، افتح صفحة الدخول وسجل بحساب المدير.</p>
+              </div>
+              <div class="settings-session-actions">
+                <a class="settings-session-action" href="../index.html">
+                  <strong data-i18n="settingsLoginPage">صفحة الدخول</strong>
+                  <span data-i18n="settingsSwitchAccount">تبديل الحساب</span>
+                </a>
+                <button class="settings-session-action danger" type="button" data-logout>
+                  <strong data-i18n="settingsLogout">تسجيل خروج</strong>
+                  <span data-i18n="settingsEndSession">إنهاء الجلسة</span>
+                </button>
+              </div>
+            </article>
+
+            <div class="settings-mini-actions">
+              <a class="settings-mini-card settings-mini-link" href="employees.html">
+                <span>الصلاحيات</span>
+                <strong>الموظفون والصلاحيات</strong>
+                <small>إدارة الأدوار وحدود الوصول</small>
+              </a>
+              <button class="settings-mini-card" type="button" data-open-login-events>
+                <span data-i18n="settingsSecurityKicker">الأمان</span>
+                <strong data-i18n="settingsLoginLogTitle">سجل الدخول والخروج</strong>
+              </button>
+              <button class="settings-mini-card" type="button" data-open-audit-log>
+                <span data-i18n="settingsSystemKicker">النظام</span>
+                <strong data-i18n="settingsAuditLogTitle">سجل العمليات</strong>
+              </button>
+            </div>
+          </section>
+        </section>
+
+        <section class="settings-page-section settings-section-card" data-settings-section="data">
+          <div class="settings-section-head compact">
+            <div>
+              <span class="eyebrow">DATA CARE</span>
+              <h2>البيانات والصيانة</h2>
+            </div>
+            <p>نسخ احتياطي، استرجاع، وإجراءات حساسة بوضوح كامل قبل التنفيذ.</p>
+          </div>
+          <div class="settings-admin-grid settings-console-admin-grid">
+            <a class="settings-control-card settings-control-link" href="backup.html">
+              <span class="settings-control-icon">BK</span>
+              <span class="settings-control-copy"><small data-i18n="settingsBackupButton">نسخة احتياطية</small><strong data-i18n="settingsDataProtectionTitle">حماية البيانات</strong><em>تصدير واسترجاع البيانات</em></span>
+            </a>
+            <section class="panel settings-profile-panel settings-backup-panel settings-danger-panel">
+              <div class="panel-head">
+                <div>
+                  <span class="eyebrow" data-i18n="settingsDangerKicker">منطقة حساسة</span>
+                  <h2 data-i18n="settingsDangerTitle">تصفير بيانات التشغيل</h2>
+                </div>
+                <div class="toolbar">
+                  <button class="button ghost danger" type="button" data-system-reset data-i18n="settingsResetSystem">تصفير النظام</button>
+                </div>
+              </div>
+              <div class="settings-backup-copy">
+                <strong data-i18n="settingsDangerCopyTitle">يبقى حساب المدير والإعدادات الأساسية فقط</strong>
+                <span data-i18n="settingsDangerCopyText">يمسح العملاء، الموردين، الموظفين، المخازن، المنتجات، الفواتير، الديون، الحركات المالية، وسجلات التشغيل. لا يغير الثيم، اللغة، العملة، أو بيانات المتجر.</span>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="settings-page-section settings-section-card" data-settings-section="help">
+          <div class="settings-section-head compact">
+            <div>
+              <span class="eyebrow" data-i18n="settingsGuideKicker">المساعدة</span>
+              <h2 data-i18n="settingsGuideTitle">الدليل المحدث للنظام</h2>
+            </div>
+            <p data-i18n="settingsGuideButtonSub">آخر مسار عمل وخريطة الصلاحيات حسب التحديثات الحالية.</p>
+          </div>
+          <button class="settings-control-card settings-guide-launch" type="button" data-open-usage-guide>
+            <span class="settings-control-icon">?</span>
+            <span class="settings-control-copy"><small>مساعدة تشغيلية</small><strong>افتح الدليل الإرشادي</strong><em>خطوات مختصرة للمدير والموظفين</em></span>
+          </button>
+        </section>
+      </main>
+    </div>
+
+    <div class="settings-drawer-shell hidden" data-business-drawer>
+      <div class="settings-drawer-backdrop" data-close-business-drawer></div>
+      <aside class="settings-drawer" role="dialog" aria-modal="true" aria-labelledby="business-drawer-title">
+        <div class="settings-drawer-head">
+          <div>
+            <span class="eyebrow" data-i18n="settingsStoreKicker">بيانات المتجر</span>
+            <h2 id="business-drawer-title" data-i18n="settingsBusinessButton">معلوماتك</h2>
+            <p data-i18n="settingsStoreText">هذه البيانات تظهر في الفواتير والتقارير المطبوعة.</p>
+          </div>
+          <button class="button ghost" type="button" data-close-business-drawer data-i18n="close">إغلاق</button>
+        </div>
+        <div class="settings-drawer-form">
+          <label class="field">
+            <span data-i18n="businessName">اسم المتجر</span>
+            <input data-settings-business-name data-i18n-placeholder="businessName" placeholder="اسم المتجر" />
+          </label>
+          <label class="field">
+            <span data-i18n="settingsStoreOwner">اسم صاحب الحساب</span>
+            <input data-settings-business-owner data-i18n-placeholder="settingsStoreOwner" placeholder="اسم صاحب الحساب" />
+          </label>
+          <label class="field">
+            <span data-i18n="businessPhone">هاتف المتجر</span>
+            <input data-settings-business-phone data-i18n-placeholder="businessPhone" placeholder="رقم الهاتف" />
+          </label>
+          <label class="field">
+            <span data-i18n="settingsStoreLocation">الموقع</span>
+            <input data-settings-business-address data-i18n-placeholder="settingsStoreLocation" placeholder="الموقع" />
+          </label>
+          <label class="field">
+            <span data-i18n="settingsStoreCompany">اسم الشركة</span>
+            <input data-settings-business-company data-i18n-placeholder="settingsStoreCompany" placeholder="اختياري" />
+          </label>
+        </div>
+        <div class="settings-drawer-actions">
+          <button class="button ghost" type="button" data-close-business-drawer data-i18n="cancel">إلغاء</button>
+          <button class="button primary" type="button" data-save-business-profile data-i18n="save">حفظ</button>
+        </div>
+      </aside>
+    </div>
+
+    <div class="settings-drawer-shell hidden" data-installment-profit-drawer>
+      <div class="settings-drawer-backdrop" data-close-installment-profit-drawer></div>
+      <aside class="settings-drawer installment-profit-settings-drawer" role="dialog" aria-modal="true" aria-labelledby="installment-profit-title">
+        <div class="settings-drawer-head">
+          <div>
+            <span class="eyebrow">INSTALLMENT PROFIT</span>
+            <h2 id="installment-profit-title">إعدادات أرباح الأقساط</h2>
+            <p>حدد طريقة الربح الافتراضية وحدود الربح التي تطبق عند إنشاء بيع أقساط جديد.</p>
+          </div>
+          <button class="button ghost" type="button" data-close-installment-profit-drawer data-i18n="close">إغلاق</button>
+        </div>
+        <div class="settings-drawer-form installment-profit-settings-form">
+          <label class="field">
+            <span>طريقة الربح الافتراضية</span>
+            <select data-installment-profit-default-mode>
+              <option value="percent">نسبة مئوية (%)</option>
+              <option value="fixed">مبلغ ثابت</option>
+            </select>
+          </label>
+          <div class="installment-profit-settings-grid">
+            <label class="field">
+              <span>الربح الافتراضي بالنسبة</span>
+              <input type="number" min="0" step="0.01" data-settings-installment-profit-percent />
+            </label>
+            <label class="field">
+              <span>الربح الافتراضي بالمبلغ</span>
+              <input type="number" min="0" step="0.01" data-settings-installment-profit-fixed />
+            </label>
+            <label class="field">
+              <span>الحد الأدنى للربح</span>
+              <input type="number" min="0" step="0.01" data-settings-installment-profit-min />
+            </label>
+            <label class="field">
+              <span>الحد الأعلى للربح</span>
+              <input type="number" min="0" step="0.01" data-settings-installment-profit-max />
+            </label>
+          </div>
+          <label class="settings-sound-toggle compact">
+            <input type="checkbox" data-settings-installment-profit-allow-edit />
+            <span>السماح للموظفين بتعديل الربح عند إنشاء الأقساط</span>
+          </label>
+          <p class="installment-profit-settings-note">القيم المالية تظهر بعملة الواجهة الحالية وتحفظ داخلياً بالدولار مثل بقية النظام.</p>
+          <div class="toolbar">
+            <button class="button primary" type="button" data-save-installment-profit-settings>حفظ إعدادات الربح</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="settings-drawer-shell hidden" data-invoice-print-drawer>
+      <div class="settings-drawer-backdrop" data-close-invoice-print-drawer></div>
+      <aside class="settings-drawer invoice-print-drawer" role="dialog" aria-modal="true" aria-labelledby="invoice-print-title">
+        <div class="settings-drawer-head">
+          <div>
+            <span class="eyebrow">PRINT SYSTEM</span>
+            <h2 id="invoice-print-title">خصائص الفاتورة</h2>
+            <p>قوالب الطباعة لكل عمليات البيع والشراء والكشوف.</p>
+          </div>
+          <button class="button ghost" type="button" data-close-invoice-print-drawer data-i18n="close">إغلاق</button>
+        </div>
+        <div class="invoice-print-settings-grid">
+          <section class="invoice-print-controls">
+            <div class="invoice-designer-panel invoice-designer-panel-primary">
+              <div class="invoice-designer-panel-head">
+                <span class="eyebrow">INVOICE DESIGNER</span>
+                <strong>هوية الفاتورة والمعاينة</strong>
+              </div>
+              <label class="field">
+                <span>نوع المستند</span>
+                <select data-invoice-print-document>
+                  <option value="directSale">بيع مباشر</option>
+                  <option value="saleInvoice">بيع بفاتورة</option>
+                  <option value="directPurchase">شراء مباشر</option>
+                  <option value="purchaseInvoice">فاتورة شراء</option>
+                  <option value="clientReceipt">وصل قبض</option>
+                  <option value="clientStatement">كشف عميل</option>
+                  <option value="supplierStatement">كشف مورد</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>القالب</span>
+                <select data-invoice-print-template>
+                  <option value="iraqi-thermal-80">سوق عراقي 80mm</option>
+                  <option value="thermal-80">Thermal Compact 80mm</option>
+                  <option value="official-a4">رسمي A4</option>
+                  <option value="professional-color">احترافي ملون</option>
+                  <option value="warehouse-dense">Bordered ERP</option>
+                  <option value="receipt-short">وصل مختصر</option>
+                  <option value="ledger-a4">Ledger Statement</option>
+                </select>
+              </label>
+              <div class="invoice-designer-presets" aria-label="قوالب تصميم الفاتورة">
+                <button class="button ghost" type="button" data-invoice-designer-preset="official">رسمي A4</button>
+                <button class="button ghost" type="button" data-invoice-designer-preset="color">احترافي ملون</button>
+                <button class="button ghost" type="button" data-invoice-designer-preset="minimal">Minimal White</button>
+                <button class="button ghost" type="button" data-invoice-designer-preset="erp">Bordered ERP</button>
+                <button class="button ghost" type="button" data-invoice-designer-preset="iraqi">سوق عراقي</button>
+                <button class="button ghost" type="button" data-invoice-designer-preset="thermal">Thermal</button>
+                <button class="button ghost" type="button" data-invoice-designer-preset="ledger">Ledger</button>
+              </div>
+            </div>
+            <div class="invoice-print-row">
+              <label class="field">
+                <span>حجم الورق</span>
+                <select data-invoice-print-paper>
+                  <option value="a4">A4</option>
+                  <option value="thermal-80">80mm</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>الكثافة</span>
+                <select data-invoice-print-density>
+                  <option value="compact">مضغوط</option>
+                  <option value="normal">طبيعي</option>
+                  <option value="dense">جدولي كثيف</option>
+                </select>
+              </label>
+            </div>
+            <div class="invoice-print-row">
+              <label class="field">
+                <span>لون القالب</span>
+                <input type="color" data-invoice-print-accent value="#0f766e" />
+              </label>
+              <label class="field">
+                <span>حجم الخط</span>
+                <input type="range" min="85" max="120" step="1" data-invoice-print-font />
+              </label>
+            </div>
+            <input type="hidden" data-invoice-print-logo value="mark" />
+            <div class="invoice-designer-panel">
+              <div class="invoice-designer-panel-head">
+                <span class="eyebrow">LOGO STUDIO</span>
+                <strong>شكل الشعار ومكانه</strong>
+              </div>
+              <div class="invoice-designer-grid">
+                <label class="field">
+                  <span>مصدر الشعار</span>
+                  <select data-invoice-logo-source>
+                    <option value="tox">TOX mark</option>
+                    <option value="initials">أحرف اسم المتجر</option>
+                    <option value="uploaded">صورة مرفوعة</option>
+                    <option value="none">بدون شعار</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>رفع صورة الشعار</span>
+                  <input type="file" accept="image/png,image/jpeg,image/svg+xml,image/webp" data-invoice-logo-upload />
+                  <small data-invoice-logo-upload-status>PNG/JPG/SVG حتى 300KB</small>
+                </label>
+                <label class="field">
+                  <span>شكل الشعار</span>
+                  <select data-invoice-logo-shape>
+                    <option value="rounded">مربع ناعم</option>
+                    <option value="square">مربع رسمي</option>
+                    <option value="circle">دائري</option>
+                    <option value="seal">ختم</option>
+                    <option value="letterhead">شريط Letterhead</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>مكان الشعار</span>
+                  <select data-invoice-logo-position>
+                    <option value="start">بداية الهيدر</option>
+                    <option value="center">وسط الهيدر</option>
+                    <option value="end">نهاية الهيدر</option>
+                    <option value="watermark">علامة مائية</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>حجم الشعار</span>
+                  <input type="range" min="28" max="96" step="1" data-invoice-logo-size />
+                </label>
+                <label class="field">
+                  <span>شفافية الشعار</span>
+                  <input type="range" min="12" max="100" step="1" data-invoice-logo-opacity />
+                </label>
+              </div>
+              <label class="settings-sound-toggle compact">
+                <input type="checkbox" data-invoice-logo-business-name />
+                <span>إظهار اسم المتجر بجانب الشعار</span>
+              </label>
+              <label class="field">
+                <span>سطر تعريفي اختياري</span>
+                <input maxlength="120" data-invoice-logo-tagline placeholder="مثال: تجهيزات ومبيعات ومخازن" />
+              </label>
+            </div>
+            <div class="invoice-designer-panel">
+              <div class="invoice-designer-panel-head">
+                <span class="eyebrow">LAYOUT</span>
+                <strong>التخطيط والقراءة</strong>
+              </div>
+              <div class="invoice-designer-grid">
+                <label class="field">
+                  <span>نمط الهيدر</span>
+                  <select data-invoice-header-style>
+                    <option value="classic">Classic</option>
+                    <option value="minimal">Minimal White</option>
+                    <option value="gradient">Accent Gradient</option>
+                    <option value="boxed">Boxed</option>
+                    <option value="letterhead">Letterhead</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>جدول المنتجات</span>
+                  <select data-invoice-table-style>
+                    <option value="striped">Striped</option>
+                    <option value="boxed">Boxed</option>
+                    <option value="minimal">Minimal</option>
+                    <option value="dense">Dense ERP</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>صندوق الإجمالي</span>
+                  <select data-invoice-total-style>
+                    <option value="card">Card</option>
+                    <option value="bar">Bar</option>
+                    <option value="classic">Classic</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>الحدود</span>
+                  <select data-invoice-border-style>
+                    <option value="soft">ناعمة</option>
+                    <option value="sharp">حادة</option>
+                    <option value="none">بدون حدود</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>هوامش الورقة</span>
+                  <input type="range" min="80" max="125" step="1" data-invoice-margin-scale />
+                </label>
+              </div>
+            </div>
+            <div class="invoice-designer-panel">
+              <div class="invoice-designer-panel-head">
+                <span class="eyebrow">CONTENT</span>
+                <strong>المحتوى والتذييل</strong>
+              </div>
+              <div class="invoice-print-toggles">
+                <label><input type="checkbox" data-invoice-print-field="phone" /> الهاتف</label>
+                <label><input type="checkbox" data-invoice-print-field="address" /> العنوان</label>
+                <label><input type="checkbox" data-invoice-print-field="barcode" /> الباركود/SKU</label>
+                <label><input type="checkbox" data-invoice-print-field="notes" /> الملاحظات</label>
+                <label><input type="checkbox" data-invoice-print-field="signature" /> التواقيع</label>
+                <label><input type="checkbox" data-invoice-print-field="paidRemaining" /> المدفوع والمتبقي</label>
+                <label><input type="checkbox" data-invoice-print-field="tax" /> ضريبة/رسم اختياري</label>
+              </div>
+              <label class="field">
+                <span>ملاحظات التذييل</span>
+                <textarea rows="3" maxlength="500" data-invoice-footer-note placeholder="تظهر أسفل الملاحظات في الفاتورة"></textarea>
+              </label>
+              <label class="field">
+                <span>شروط الدفع</span>
+                <textarea rows="3" maxlength="500" data-invoice-payment-terms placeholder="مثال: البضاعة المباعة لا ترد إلا حسب سياسة المتجر"></textarea>
+              </label>
+              <div class="invoice-print-toggles">
+                <label><input type="checkbox" data-invoice-footer-signature /> إظهار التواقيع</label>
+                <label><input type="checkbox" data-invoice-footer-thanks /> عبارة شكر</label>
+              </div>
+            </div>
+            <div class="toolbar">
+              <button class="button primary" type="button" data-save-invoice-print-settings>حفظ الخصائص</button>
+              <button class="button ghost" type="button" data-print-invoice-preview>طباعة المعاينة</button>
+              <button class="button ghost" type="button" data-invoice-designer-reset>إعادة الضبط</button>
+            </div>
+          </section>
+          <section class="invoice-print-preview-shell">
+            <iframe title="Invoice print preview" data-invoice-print-preview></iframe>
+          </section>
+        </div>
+      </aside>
+    </div>
+
+    <div class="usage-guide-modal hidden" data-usage-guide-modal>
+      <div class="usage-guide-backdrop" data-close-usage-guide></div>
+      <section class="usage-guide-card" role="dialog" aria-modal="true" aria-labelledby="usage-guide-title">
+        <div class="usage-guide-head">
+          <div>
+            <span class="eyebrow">TOX ERP</span>
+            <h2 id="usage-guide-title" data-i18n="settingsGuideModalTitle">دليل استخدام النظام</h2>
+            <p data-i18n="settingsGuideModalText">هذا الدليل يوضح طريقة تشغيل النظام وصلاحيات كل مستخدم.</p>
+          </div>
+          <button class="button ghost" type="button" data-close-usage-guide data-i18n="close">إغلاق</button>
+        </div>
+        <div class="settings-guide-reader">
+          <aside class="settings-guide-steps" data-guide-steps></aside>
+          <article class="settings-guide-page">
+            <span class="eyebrow" data-guide-kicker>الخطوة 1</span>
+            <h3 data-guide-title>تهيئة النظام</h3>
+            <p data-guide-body>ابدأ بتسجيل الدخول بحساب المدير، ثم اضبط العملة واللغة وبيانات المتجر حتى تظهر الفواتير والتقارير بشكل صحيح.</p>
+            <ul data-guide-points></ul>
+            <div class="settings-guide-reader-actions">
+              <button class="button ghost" type="button" data-guide-prev data-i18n="previous">السابق</button>
+              <button class="button primary" type="button" data-guide-next>التالي</button>
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <div class="usage-guide-modal hidden" data-login-events-modal>
+      <div class="usage-guide-backdrop" data-close-login-events></div>
+      <section class="usage-guide-card settings-log-modal-card" role="dialog" aria-modal="true">
+        <div class="usage-guide-head">
+          <div>
+            <span class="eyebrow" data-i18n="settingsSecurityKicker">الأمان</span>
+            <h2 data-i18n="settingsLoginLogTitle">سجل الدخول والخروج</h2>
+          </div>
+          <div class="toolbar">
+            <button class="button ghost" type="button" data-refresh-login-events data-i18n="refresh">تحديث</button>
+            <button class="button ghost" type="button" data-close-login-events data-i18n="close">إغلاق</button>
+          </div>
+        </div>
+        <div class="ledger-list settings-log-list" data-login-events-list>
+          <div class="warehouse-empty" data-i18n="settingsLoginLogEmpty">سجل الدخول يظهر هنا</div>
+        </div>
+      </section>
+    </div>
+
+    <div class="usage-guide-modal hidden" data-audit-log-modal>
+      <div class="usage-guide-backdrop" data-close-audit-log></div>
+      <section class="usage-guide-card settings-log-modal-card" role="dialog" aria-modal="true">
+        <div class="usage-guide-head">
+          <div>
+            <span class="eyebrow" data-i18n="settingsSystemKicker">النظام</span>
+            <h2 data-i18n="settingsAuditLogTitle">سجل العمليات</h2>
+          </div>
+          <div class="toolbar">
+            <button class="button ghost" type="button" data-refresh-audit data-i18n="refresh">تحديث</button>
+            <button class="button ghost" type="button" data-close-audit-log data-i18n="close">إغلاق</button>
+          </div>
+        </div>
+        <div class="ledger-list settings-log-list" data-audit-log-list>
+          <div class="warehouse-empty" data-i18n="settingsAuditLogEmpty">سجل العمليات يظهر هنا</div>
+        </div>
+      </section>
+    </div>
+
+    <script src="../assets/js/api-client.js?v=20260605-auth-session"></script>
+    <script src="../assets/js/welcome.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/state.js?v=20260606-settings-sync"></script>
+    <script src="../assets/js/ui.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/invoice-print-engine.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/settings.js?v=20260530-arabic-utf8"></script>
+  </body>
+</html>
+

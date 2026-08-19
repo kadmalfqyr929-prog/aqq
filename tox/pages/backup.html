@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TOX | Backup</title>
+    <script src="../assets/js/theme-bootstrap.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/interaction-core.js?v=20260530-arabic-utf8"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=20260606-tox-classic-logo" />
+  </head>
+  <body data-page="backup">
+    <main class="workspace backup-page">
+      <header class="topbar settings-topbar">
+        <div>
+          <p class="eyebrow" data-i18n="settingsBackupKicker">النسخ الاحتياطي</p>
+          <h1 data-i18n="settingsDataProtectionTitle">حماية بيانات النظام</h1>
+        </div>
+        <a class="button ghost" href="settings.html">رجوع للإعدادات</a>
+      </header>
+
+      <section class="settings-hero settings-console-hero">
+        <div>
+          <span class="eyebrow">TOX ERP</span>
+          <h2>نسخة واحدة كاملة بدون ضغط</h2>
+        </div>
+        <div class="settings-chip-row">
+          <span data-theme-summary>TOX Blue</span>
+          <span data-rate-summary>1 USD = 1460 IQD</span>
+        </div>
+      </section>
+
+
+
+      <section class="panel backup-action-panel">
+        <div class="panel-head">
+          <div>
+            <span class="eyebrow">BACKUP</span>
+            <h2>النسخ والاسترجاع</h2>
+          </div>
+        </div>
+        <div class="backup-action-grid">
+          <article class="backup-action-card">
+            <div>
+              <span class="eyebrow">EXPORT</span>
+              <h3>تصدير نسخة احتياطية</h3>
+            </div>
+            <button class="button primary" type="button" data-export-backup>تصدير نسخة احتياطية</button>
+          </article>
+
+          <article class="backup-action-card">
+            <div>
+              <span class="eyebrow">RESTORE</span>
+              <h3>استرجاع نسخة احتياطية</h3>
+            </div>
+            <label class="button ghost" for="backup-restore-input">اختيار نسخة للاسترجاع</label>
+            <input id="backup-restore-input" class="visually-hidden" type="file" accept="application/json,.json" data-restore-backup />
+          </article>
+        </div>
+        <div class="settings-backup-copy" data-backup-status hidden></div>
+      </section>
+    </main>
+
+    <script src="../assets/js/api-client.js?v=20260605-auth-session"></script>
+    <script src="../assets/js/welcome.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/state.js?v=20260606-settings-sync"></script>
+    <script src="../assets/js/ui.js?v=20260530-arabic-utf8"></script>
+    <script>
+      (() => {
+        const backupApiBase = window.ToxApi?.baseUrl?.() || `${window.location.origin.includes(":5500") ? "http://127.0.0.1:8765" : ""}/api`;
+        const text = {
+          ar: {
+            exported: "تم تصدير النسخة الاحتياطية",
+            restored: "تم استرجاع النسخة. سيتم تحديث الصفحة.",
+            restoreError: "تعذر استرجاع النسخة",
+            invalid: "ملف النسخة غير صالح",
+            zipDetails: "الاسترجاع يدعم JSON فقط.",
+            confirm: "تم قراءة تفاصيل النسخة. هل تريد استرجاعها الآن؟ سيتم إنشاء نسخة أمان للحالة الحالية.",
+            healthReady: "جاهز",
+            healthBlocked: "يحتاج مراجعة",
+            healthError: "تعذر فحص جاهزية النظام",
+            localCleared: "تم مسح ذاكرة المتصفح القديمة",
+            networkReady: "رابط التشغيل جاهز",
+            networkDisabled: "تشغيل محلي فقط",
+            networkError: "تعذر فحص رابط التشغيل",
+            localCopied: "تم نسخ رابط التشغيل"
+          },
+          en: {
+            exported: "Backup exported",
+            restored: "Backup restored. The page will refresh.",
+            restoreError: "Could not restore the backup",
+            invalid: "The backup file is invalid",
+            zipDetails: "Restore supports JSON only.",
+            confirm: "Backup details were read. Restore it now? A safety backup of the current state will be created.",
+            healthReady: "Ready",
+            healthBlocked: "Needs review",
+            healthError: "Could not check system health",
+            localCleared: "Old browser cache was cleared",
+            networkReady: "Startup link ready",
+            networkDisabled: "Local only",
+            networkError: "Could not check startup link",
+            localCopied: "Startup link copied"
+          }
+        };
+        let currentLocalUrl = "";
+
+        function lang() {
+          try {
+            return ToxStore.getState().lang === "en" ? "en" : "ar";
+          } catch (error) {
+            return "ar";
+          }
+        }
+
+        function message(key) {
+          const current = lang();
+          return text[current]?.[key] || text.en[key] || key;
+        }
+
+        const backupErrorMessages = {
+          ar: {
+            CHECKSUM_FAILED: "النسخة تغيرت أو تلفت. صدّر نسخة جديدة أو استخدم ملفاً أصلياً لم يتم تعديله.",
+            UNSUPPORTED_BACKUP: "إصدار النسخة غير مدعوم من هذا الإصدار.",
+            INVALID_BACKUP: "ملف النسخة غير صحيح.",
+            INVALID_ZIP: "ملف ZIP غير صحيح.",
+            ZIP_BACKUP_DISABLED: "استرجاع ZIP متوقف. استخدم ملف JSON فقط.",
+            LEGACY_BACKUP_DISABLED: "هذه نسخة قديمة/محلية غير مدعومة. صدّر نسخة JSON موحدة جديدة من صفحة النسخ.",
+            BACKUP_FILES_MISSING: "النسخة ناقصة ملفات مطلوبة.",
+            BACKUP_SCHEMA_MISMATCH: "جداول أو حقول النسخة لا تطابق إصدار النظام الحالي.",
+            BACKUP_ADMIN_MISSING: "النسخة لا تحتوي مستخدم مدير فعال.",
+            INVALID_DATABASE_PAYLOAD: "بيانات قاعدة البيانات داخل النسخة غير صالحة.",
+            SQLITE_INTEGRITY_FAILED: "قاعدة البيانات داخل النسخة غير سليمة.",
+            DATABASE_RESTORE_FAILED: "تعذر كتابة قاعدة البيانات. أغلق نوافذ TOX الأخرى وحاول مرة ثانية.",
+            EMPTY_BACKUP: "ملف النسخة فارغ.",
+            PAYLOAD_TOO_LARGE: "حجم ملف النسخة أكبر من الحد المسموح. ارفع حد الرفع أو صدّر نسخة أصغر ثم حاول مرة ثانية.",
+            STATE_CHECKSUM_RECOVERED: "تم إنقاذ النسخة من قاعدة البيانات؛ بيانات العرض داخل الملف تغيرت أثناء التنزيل.",
+            CONFIG_CHECKSUM_RECOVERED: "تم إنقاذ النسخة من قاعدة البيانات؛ إعدادات العرض داخل الملف تغيرت أثناء التنزيل."
+          },
+          en: {
+            CHECKSUM_FAILED: "The backup was changed or damaged. Use the original backup file.",
+            UNSUPPORTED_BACKUP: "This backup version is not supported by this app version.",
+            INVALID_BACKUP: "The backup file is invalid.",
+            INVALID_ZIP: "The ZIP backup file is invalid.",
+            ZIP_BACKUP_DISABLED: "ZIP restore is disabled. Use a JSON backup file only.",
+            LEGACY_BACKUP_DISABLED: "This legacy/local backup is not supported. Export a new unified JSON backup.",
+            BACKUP_FILES_MISSING: "The backup is missing required files.",
+            BACKUP_SCHEMA_MISMATCH: "The backup schema does not match this app version.",
+            BACKUP_ADMIN_MISSING: "The backup does not contain an active admin user.",
+            INVALID_DATABASE_PAYLOAD: "The backup database payload is invalid.",
+            SQLITE_INTEGRITY_FAILED: "The database inside the backup failed integrity checks.",
+            DATABASE_RESTORE_FAILED: "Could not write the database. Close other TOX windows and try again.",
+            EMPTY_BACKUP: "The backup file is empty.",
+            PAYLOAD_TOO_LARGE: "The backup file is larger than the allowed upload limit.",
+            STATE_CHECKSUM_RECOVERED: "The backup was recovered from the database; display state changed during download.",
+            CONFIG_CHECKSUM_RECOVERED: "The backup was recovered from the database; display config changed during download."
+          }
+        };
+
+        function backupErrorText(payload = {}, fallback = "") {
+          const current = lang();
+          const reason = payload.reason || payload.code || "";
+          const mapped = backupErrorMessages[current]?.[reason] || backupErrorMessages.en[reason] || "";
+          const details = payload.details && typeof payload.details === "object"
+            ? Object.entries(payload.details).map(([key, value]) => `${key}: ${Array.isArray(value) ? value.join(", ") : value}`).join(" | ")
+            : "";
+          const sizeDetails = payload.limitBytes
+            ? `${current === "ar" ? "الحد" : "limit"}: ${formatBytes(payload.limitBytes)} | ${current === "ar" ? "الملف" : "file"}: ${formatBytes(payload.providedBytes || 0)}`
+            : "";
+          const steps = Array.isArray(payload.recoverySteps) ? payload.recoverySteps.join(" | ") : "";
+          return [mapped || payload.messageAr || payload.message || reason || fallback, sizeDetails, details, steps].filter(Boolean).join(" - ");
+        }
+
+        async function responseError(response, fallback) {
+          const payload = await response.json().catch(() => ({}));
+          return new Error(backupErrorText(payload, fallback || `Restore failed: ${response.status}`));
+        }
+
+        function apiFetch(path, options = {}) {
+          if (window.ToxApi?.fetch) return window.ToxApi.fetch(path, options);
+          return fetch(`${backupApiBase}${path}`, {
+            credentials: "include",
+            ...options,
+            headers: {
+              ...(options.body ? { "Content-Type": "application/json" } : {}),
+              ...(options.headers || {})
+            }
+          });
+        }
+
+        function notify(value, tone = "info") {
+          if (typeof showNotice === "function") showNotice(value, tone);
+        }
+
+        function escapeHtml(value) {
+          return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            "\"": "&quot;",
+            "'": "&#39;"
+          })[char]);
+        }
+
+        function formatBytes(value) {
+          const bytes = Number(value || 0);
+          if (!Number.isFinite(bytes) || bytes <= 0) return "0 KB";
+          if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+          return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+        }
+
+        function stamp(date = new Date()) {
+          const pad = (value) => String(value).padStart(2, "0");
+          return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}-${pad(date.getHours())}${pad(date.getMinutes())}`;
+        }
+
+        function downloadBlob(blob, filename) {
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          URL.revokeObjectURL(link.href);
+          link.remove();
+        }
+
+        function warningText(warnings = []) {
+          return (warnings || []).map((item) => {
+            const code = item.code || "";
+            return backupErrorMessages[lang()]?.[code] || backupErrorMessages.en[code] || item.message || code;
+          }).filter(Boolean).join(" | ");
+        }
+
+        function backupPreviewText(verified = {}, file = null) {
+          const ar = lang() !== "en";
+          const backup = verified.backup || {};
+          const counts = backup.recordCounts || {};
+          const countLine = [
+            ["auth_user", ar ? "المستخدمون" : "users"],
+            ["erp_warehouse", ar ? "المخازن" : "warehouses"],
+            ["erp_product", ar ? "المنتجات" : "products"],
+            ["erp_invoice", ar ? "الفواتير" : "invoices"],
+            ["erp_client", ar ? "العملاء" : "clients"],
+            ["erp_supplier", ar ? "الموردون" : "suppliers"]
+          ].filter(([key]) => counts[key] !== undefined)
+            .map(([key, label]) => `${label}: ${counts[key]}`)
+            .join(" | ");
+          return [
+            ar ? "تم فحص النسخة بنجاح." : "Backup verification passed.",
+            `${ar ? "الملف" : "File"}: ${file?.name || "-"}`,
+            `${ar ? "النوع" : "Format"}: ${backup.format || "-"}`,
+            `${ar ? "الإصدار" : "Version"}: ${backup.version ?? "-"}`,
+            countLine,
+            ar ? "هل تريد تطبيق الاسترجاع النهائي الآن؟" : "Apply the final restore now?"
+          ].filter(Boolean).join("\n");
+        }
+
+        function reloadWithCacheBuster() {
+          window.location.replace(`${window.location.pathname}?restored=${Date.now()}${window.location.hash || ""}`);
+        }
+
+        function renderBackupStatus(payload) {
+          const status = document.querySelector("[data-backup-status]");
+          if (!status) return;
+          const manifest = payload?.backup || payload?.manifest || payload || {};
+          const counts = manifest.recordCounts || payload?.recordCounts || {};
+          const important = ["auth_user", "erp_warehouse", "erp_product", "erp_invoice", "erp_purchase", "erp_client", "erp_supplier"];
+          const countText = important
+            .filter((key) => counts[key] !== undefined)
+            .map((key) => `${key}: ${counts[key]}`)
+            .join(" | ");
+          const databaseSize = manifest.files?.database?.size || manifest.databaseSize || 0;
+          status.hidden = false;
+          status.innerHTML = `
+            <strong>${lang() === "ar" ? "تفاصيل النسخة" : "Backup details"}</strong>
+            <span>${lang() === "ar" ? "نوع النسخة" : "Backup type"}: ${escapeHtml(manifest.format || "-")}</span>
+            <span>${lang() === "ar" ? "تاريخ النسخة" : "Created"}: ${escapeHtml(manifest.createdAt || "-")}</span>
+            <span>${lang() === "ar" ? "إصدار التطبيق" : "App version"}: ${escapeHtml(manifest.appVersion || "-")}</span>
+            <span>${lang() === "ar" ? "حجم قاعدة البيانات" : "Database size"}: ${Math.round(databaseSize / 1024)} KB</span>
+            <span>${escapeHtml(countText || (lang() === "ar" ? "تمت قراءة معلومات النسخة" : "Backup metadata loaded"))}</span>
+            ${payload?.warnings?.length ? `<span>${escapeHtml(warningText(payload.warnings))}</span>` : ""}
+          `;
+        }
+
+        function renderBackupFileStatus(file, formatLabel) {
+          const status = document.querySelector("[data-backup-status]");
+          if (!status) return;
+          status.hidden = false;
+          status.innerHTML = `
+            <strong>${lang() === "ar" ? "تفاصيل النسخة" : "Backup details"}</strong>
+            <span>${lang() === "ar" ? "نوع النسخة" : "Backup type"}: ${escapeHtml(formatLabel)}</span>
+            <span>${lang() === "ar" ? "اسم الملف" : "File"}: ${escapeHtml(file?.name || "-")}</span>
+            <span>${lang() === "ar" ? "حجم الملف" : "File size"}: ${Math.round((file?.size || 0) / 1024)} KB</span>
+            <span>${escapeHtml(message("zipDetails"))}</span>
+          `;
+        }
+
+        function localCacheStatus() {
+          try {
+            const rejected = JSON.parse(localStorage.getItem("tox-business-state-rejected-backup") || "null");
+            const generation = localStorage.getItem("tox-business-data-generation") || "";
+            return {
+              generation,
+              rejectedReason: rejected?.reason || "",
+              rejectedAt: rejected?.createdAt || ""
+            };
+          } catch (error) {
+            return { generation: "", rejectedReason: "", rejectedAt: "" };
+          }
+        }
+
+        function renderSystemHealth(payload = null, error = null) {
+          const status = document.querySelector("[data-system-health-status]");
+          const metrics = document.querySelector("[data-system-health-metrics]");
+          const issues = document.querySelector("[data-system-health-issues]");
+          if (!status || !metrics || !issues) return;
+          const ar = lang() !== "en";
+          if (error || !payload) {
+            status.className = "cost-status-pill warn";
+            status.textContent = message("healthError");
+            metrics.innerHTML = "";
+            issues.hidden = false;
+            issues.innerHTML = `<span>${escapeHtml(error?.message || message("healthError"))}</span>`;
+            return;
+          }
+          const local = localCacheStatus();
+          const ready = Boolean(payload.ready);
+          status.className = `cost-status-pill ${ready ? "ok" : "warn"}`;
+          status.textContent = ready ? message("healthReady") : message("healthBlocked");
+          const database = payload.database || {};
+          const backups = payload.backups || {};
+          const snapshots = payload.snapshots || {};
+          const logs = payload.logs || {};
+          const network = payload.network || {};
+          const cache = payload.cache || {};
+          const latestBackup = backups.latest || {};
+          const items = [
+            [ar ? "قاعدة البيانات" : "Database", database.ok ? "OK" : "Review", database.integrity || "-"],
+            [ar ? "المزامنة" : "Migrations", payload.migrations?.pendingCount === 0 ? "OK" : `${payload.migrations?.pendingCount ?? "-"}`, ar ? "ترحيلات معلقة" : "pending migrations"],
+            [ar ? "رابط التشغيل" : "Startup URL", network.localUrl || "-", ar ? "محلي فقط" : "local only"],
+            [ar ? "نسخة الواجهة" : "UI build", cache.fingerprint || payload.codeFingerprint || "-", cache.static || "-"],
+            [ar ? "آخر نسخة" : "Latest backup", latestBackup.name || "-", latestBackup.sizeBytes ? formatBytes(latestBackup.sizeBytes) : "-"],
+            [ar ? "لقطات الحالة" : "State snapshots", `${snapshots.count || 0}`, `${ar ? "أرشيف" : "archive"}: ${snapshots.archivedCount || 0}`],
+            [ar ? "سجل الأخطاء" : "Error log", logs.recentMarkerCount ? `${logs.recentMarkerCount}` : "0", ar ? "علامات في آخر السجل" : "recent markers"],
+            [ar ? "ذاكرة المتصفح" : "Browser cache", local.generation || "-", local.rejectedReason || (ar ? "لا توجد بيانات مرفوضة" : "no rejected state")]
+          ];
+          metrics.innerHTML = items.map(([label, value, hint]) => `
+            <article class="backup-health-metric">
+              <span>${escapeHtml(label)}</span>
+              <strong>${escapeHtml(value)}</strong>
+              <small>${escapeHtml(hint || "")}</small>
+            </article>
+          `).join("");
+          const issueLines = [];
+          if (!database.ok) issueLines.push(ar ? "قاعدة البيانات تحتاج مراجعة." : "Database needs review.");
+          if (!payload.foreignKeys?.ok) issueLines.push(ar ? "توجد علاقات قاعدة بيانات غير سليمة." : "Foreign key issues were detected.");
+          if (payload.migrations?.pendingCount) issueLines.push(ar ? "توجد migrations غير مطبقة." : "Pending migrations exist.");
+          if (local.rejectedReason) issueLines.push(ar ? `تم حفظ ذاكرة متصفح قديمة مرفوضة: ${local.rejectedReason}` : `Rejected browser state: ${local.rejectedReason}`);
+
+          issues.hidden = !issueLines.length;
+          issues.innerHTML = issueLines.map((line) => `<span>${escapeHtml(line)}</span>`).join("");
+        }
+
+        async function loadSystemHealth() {
+          try {
+            const response = await apiFetch("/system/health/");
+            const payload = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(payload.messageAr || payload.message || `Health failed: ${response.status}`);
+            renderSystemHealth(payload);
+          } catch (error) {
+            console.warn("System health check failed", error);
+            renderSystemHealth(null, error);
+          }
+        }
+
+        function networkCard(label, value, hint, href = "") {
+          const valueHtml = href
+            ? `<a href="${escapeHtml(href)}" target="_blank" rel="noreferrer">${escapeHtml(value)}</a>`
+            : escapeHtml(value || "-");
+          return `
+            <article class="backup-health-metric backup-network-link">
+              <span>${escapeHtml(label)}</span>
+              <strong>${valueHtml}</strong>
+              <small>${escapeHtml(hint || "")}</small>
+            </article>
+          `;
+        }
+
+        function renderSystemNetwork(payload = null, error = null) {
+          const status = document.querySelector("[data-system-network-status]");
+          const links = document.querySelector("[data-system-network-links]");
+          const note = document.querySelector("[data-system-network-note]");
+          if (!status || !links || !note) return;
+          const ar = lang() !== "en";
+          currentLocalUrl = payload?.localUrl || "";
+          if (error || !payload) {
+            status.className = "cost-status-pill warn";
+            status.textContent = message("networkError");
+            links.innerHTML = "";
+            note.textContent = error?.message || message("networkError");
+            return;
+          }
+          const ready = Boolean(payload.localUrl);
+          status.className = `cost-status-pill ${ready ? "ok" : "warn"}`;
+          status.textContent = ready ? message("networkReady") : message("networkDisabled");
+          links.innerHTML = [
+            networkCard(ar ? "رابط الكمبيوتر" : "Computer URL", payload.localUrl || "-", ar ? "يعمل على هذا الكمبيوتر" : "Works on this computer", payload.localUrl || ""),
+            networkCard(ar ? "رابط التقارير" : "Reports URL", payload.localReportsUrl || payload.reportsUrl || "-", ar ? "يفتح التقارير على هذا الكمبيوتر" : "Opens reports on this computer", payload.localReportsUrl || payload.reportsUrl || ""),
+            networkCard(ar ? "منفذ التشغيل" : "Server port", `${payload.port || "-"}`, `Bind: ${payload.bindHost || "127.0.0.1"}`)
+          ].join("");
+          note.innerHTML = (payload.notesAr || [payload.messageAr || ""]).map((line) => `<span>${escapeHtml(line)}</span>`).join("");
+        }
+
+        async function loadSystemNetwork() {
+          try {
+            const response = await apiFetch("/system/network/");
+            const payload = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(payload.messageAr || payload.message || `Network failed: ${response.status}`);
+            renderSystemNetwork(payload);
+          } catch (error) {
+            console.warn("System network check failed", error);
+            renderSystemNetwork(null, error);
+          }
+        }
+
+        async function exportBackup() {
+          const response = await apiFetch("/backup/");
+          if (!response.ok) throw new Error(`Backup export failed: ${response.status}`);
+          const raw = await response.arrayBuffer();
+          const textPayload = new TextDecoder().decode(raw.slice(0));
+          const payload = JSON.parse(textPayload);
+          renderBackupStatus(payload);
+          downloadBlob(new Blob([raw], { type: "application/json" }), `tox-backup-${stamp()}.json`);
+          notify(message("exported"), "success");
+        }
+
+        async function restoreBackup(file) {
+          if (!file) return;
+          try {
+            let response;
+            let verified = {};
+            if (/\.zip$/i.test(file.name || "")) throw new Error(backupErrorText({ reason: "ZIP_BACKUP_DISABLED" }));
+            const rawText = await file.text();
+            const payload = JSON.parse(rawText);
+            if (!payload?.manifest || payload.manifest.format !== "tox-json-full-backup" || !payload.databaseBase64) {
+              throw new Error(backupErrorText({ reason: "LEGACY_BACKUP_DISABLED" }));
+            }
+            renderBackupStatus(payload);
+            const verifyResponse = await apiFetch("/backup/verify/", {
+              method: "POST",
+              body: rawText,
+              headers: { "Content-Type": "application/json" }
+            });
+            verified = await verifyResponse.json().catch(() => ({}));
+            if (!verifyResponse.ok) throw await responseError({ ...verifyResponse, json: async () => verified }, `Verify failed: ${verifyResponse.status}`);
+            renderBackupStatus(verified);
+            if (!window.confirm(backupPreviewText(verified, file))) return;
+            response = await apiFetch("/backup/restore/", {
+              method: "POST",
+              body: rawText,
+              headers: { "Content-Type": "application/json" }
+            });
+            const restored = await response.json().catch(() => ({}));
+            if (!response.ok || restored.ok === false || restored.restoreHasErrors) {
+              if (!response.ok) throw await responseError({ ...response, json: async () => restored }, `Restore failed: ${response.status}`);
+              const firstError = restored.restoreReport?.errors?.[0];
+              throw new Error(firstError?.message || firstError?.code || backupErrorText(restored, `Restore failed: ${response.status}`));
+            }
+            ToxStore.applySystemReset?.(restored);
+            await ToxStore.refreshFromBackend?.();
+            if (restored.warnings?.length) notify(warningText(restored.warnings), "warning");
+            notify(message("restored"), "success");
+            window.setTimeout(reloadWithCacheBuster, 700);
+          } catch (error) {
+            console.warn("Backup restore failed", error);
+            notify(`${message("restoreError")}: ${error.message || ""}`, "error");
+          }
+        }
+
+        document.querySelector("[data-export-backup]")?.addEventListener("click", () => {
+          exportBackup().catch((error) => {
+            console.warn("Backup export failed", error);
+            notify(error.message || message("restoreError"), "error");
+          });
+        });
+        document.querySelector("[data-restore-backup]")?.addEventListener("change", (event) => restoreBackup(event.target.files?.[0]));
+
+      })();
+    </script>
+  </body>
+</html>

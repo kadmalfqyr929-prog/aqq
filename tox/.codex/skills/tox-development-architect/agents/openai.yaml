@@ -1,0 +1,4 @@
+interface:
+  display_name: "TOX Development Architect"
+  short_description: "Architectural TOX development guidance"
+  default_prompt: "Use the TOX Development Architect skill to improve TOX safely with strong architecture, UI quality, stability, speed, and maintainability."

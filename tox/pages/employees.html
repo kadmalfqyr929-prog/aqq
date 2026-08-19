@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TOX | إدارة الموظفين</title>
+    <script src="../assets/js/theme-bootstrap.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/interaction-core.js?v=20260530-arabic-utf8"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=20260606-tox-classic-logo" />
+    <link rel="stylesheet" href="../assets/css/dashboard-2026.css" />
+  </head>
+  <body data-page="employees">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="../index.html"><span class="brand-mark">TOX</span><span><strong>TOX</strong><small data-i18n="brandSub">نظام مبيعات ومخزون</small></span></a>
+        <nav class="nav-list">
+          <a class="nav-link" href="../index.html" data-i18n="navCommand">المركز الرئيسي</a>
+          <a class="nav-link" href="sales.html" data-i18n="navSales">المبيعات</a>
+          <a class="nav-link" href="products.html" data-i18n="navProducts">المنتجات</a>
+          <a class="nav-link" href="warehouse.html" data-i18n="navWarehouse">المخازن</a>
+          <a class="nav-link" href="purchases.html" data-i18n="navPurchases">المشتريات</a>
+          <a class="nav-link" href="clients.html" data-i18n="navClients">العملاء</a>
+          <a class="nav-link" href="suppliers.html" data-i18n="navSuppliers">الموردين</a>
+          <a class="nav-link active" href="employees.html" data-i18n="navEmployees">الموظفين</a>
+          <a class="nav-link" href="reports.html" data-i18n="navReports">التقارير الذكية</a>
+          <a class="nav-link" href="settings.html" data-i18n="navSettings">الإعدادات</a>
+        </nav>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar topbar-clean module-hero employee-hero employee-command-hero">
+          <div class="module-hero-copy">
+            <p class="eyebrow">إدارة الحسابات والصلاحيات والرواتب</p>
+            <h1>إدارة الموظفين</h1>
+            <p class="module-hero-text">واجهة إدارية موحدة لبيانات الموظف، حساب الدخول، الصلاحيات الدقيقة، وتوثيق دفعات الرواتب داخل بيئة TOX.</p>
+          </div>
+          <div class="employee-command-actions">
+            <label class="module-search">
+              <span>بحث عن موظف</span>
+              <input class="quick-search" data-employee-search placeholder="الاسم، اسم المستخدم، الهاتف، الدور" />
+            </label>
+            <div class="module-filter-pills">
+              <button class="module-pill is-active" type="button" data-employee-filter="all">الكل</button>
+              <button class="module-pill" type="button" data-employee-filter="active">نشط</button>
+              <button class="module-pill" type="button" data-employee-filter="inactive">معطل</button>
+            </div>
+            <div class="toolbar">
+              <button class="button ghost" type="button" data-refresh-employees>تحديث</button>
+              <button class="button primary" type="button" data-open-employee-modal>إضافة موظف</button>
+            </div>
+          </div>
+        </header>
+
+        <section class="erp-summary-grid employee-summary-grid">
+          <article class="metric-card erp-metric-card">
+            <span>إجمالي الحسابات</span>
+            <strong data-employee-total>0</strong>
+            <small>حسابات دخول الموظفين</small>
+          </article>
+          <article class="metric-card erp-metric-card success">
+            <span>الحسابات النشطة</span>
+            <strong data-employee-active>0</strong>
+            <small>جاهزة للدخول الآن</small>
+          </article>
+          <article class="metric-card erp-metric-card">
+            <span>سجلات الرواتب</span>
+            <strong data-employee-payroll-count>0</strong>
+            <small>دفعات موثقة بالتاريخ والوقت</small>
+          </article>
+          <article class="metric-card erp-metric-card info">
+            <span>إجمالي الرواتب</span>
+            <strong data-employee-salary-total>0 IQD</strong>
+            <small>الالتزام المالي الحالي</small>
+          </article>
+        </section>
+
+        <section class="employee-command-layout">
+          <section class="panel erp-panel employee-directory-panel">
+            <div class="erp-panel-head">
+              <div>
+                <span class="eyebrow">الدليل الإداري</span>
+                <h2>حسابات الموظفين</h2>
+              </div>
+              <span class="status-dot" data-employee-visible-count>0 ظاهر</span>
+            </div>
+            <div class="employee-directory-list" data-employees-list></div>
+          </section>
+
+          <div class="employee-profile-stack">
+            <article class="panel erp-panel employee-profile-panel" data-employee-profile></article>
+            <section class="employee-profile-grid">
+              <article class="panel erp-panel" data-employee-permissions-panel></article>
+              <article class="panel erp-panel" data-employee-activity-panel></article>
+            </section>
+          </div>
+        </section>
+
+        <div class="employee-modal-shell hidden" data-employee-modal-shell></div>
+      </main>
+    </div>
+
+    <script src="../assets/js/api-client.js?v=20260605-auth-session"></script>
+    <script src="../assets/js/welcome.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/state.js?v=20260606-settings-sync"></script>
+    <script src="../assets/js/ui.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/employees.js"></script>
+  </body>
+</html>
+

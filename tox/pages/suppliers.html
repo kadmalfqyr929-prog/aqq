@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>مخزوني | حسابات الموردين</title>
+    <script src="../assets/js/theme-bootstrap.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/interaction-core.js?v=20260530-arabic-utf8"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css?v=20260606-tox-classic-logo" />
+    <link rel="stylesheet" href="../assets/css/dashboard-2026.css" />
+  </head>
+  <body data-page="suppliers">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="../index.html"><span class="brand-mark">TOX</span><span><strong>TOX</strong><small data-i18n="brandSub">نظام مبيعات ومخزون</small></span></a>
+        <nav class="nav-list">
+          <a class="nav-link" href="../index.html" data-i18n="navCommand">المركز الرئيسي</a>
+          <a class="nav-link" href="sales.html" data-i18n="navSales">المبيعات</a>
+          <a class="nav-link" href="products.html" data-i18n="navProducts">المنتجات</a>
+          <a class="nav-link" href="warehouse.html" data-i18n="navWarehouse">المخازن</a>
+          <a class="nav-link" href="purchases.html" data-i18n="navPurchases">المشتريات</a>
+          <a class="nav-link" href="clients.html" data-i18n="navClients">العملاء</a>
+          <a class="nav-link active" href="suppliers.html" data-i18n="navSuppliers">الموردين</a>
+          <a class="nav-link" href="employees.html" data-i18n="navEmployees">الموظفين</a>
+          <a class="nav-link" href="reports.html" data-i18n="navReports">التقارير</a>
+          <a class="nav-link" href="settings.html" data-i18n="navSettings">الإعدادات</a>
+        </nav>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar topbar-clean">
+          <div>
+            <p class="eyebrow">إدارة ديون الموردين والفواتير والتسديدات في واجهة واحدة</p>
+            <h1>حسابات الموردين</h1>
+          </div>
+          <div class="topbar-actions supplier-topbar-actions">
+            <input class="quick-search" data-supplier-search placeholder="بحث سريع عن مورد" />
+            <button class="button primary supplier-neon-button" type="button" data-open-supplier-create>+ إضافة مورد جديد</button>
+          </div>
+        </header>
+
+        <section class="supplier-kpi-strip" aria-label="ملخص الموردين">
+          <article class="supplier-kpi-card">
+            <span>عدد الموردين</span>
+            <strong data-supplier-count>0</strong>
+          </article>
+          <article class="supplier-kpi-card danger">
+            <span>إجمالي الدين</span>
+            <strong data-supplier-total-debt>د.ع 0</strong>
+          </article>
+          <article class="supplier-kpi-card success">
+            <span>إجمالي المدفوع</span>
+            <strong data-supplier-total-paid>د.ع 0</strong>
+          </article>
+          <article class="supplier-kpi-card warning">
+            <span>فواتير مفتوحة</span>
+            <strong data-supplier-open-invoices>0</strong>
+          </article>
+        </section>
+
+        <section class="ledger-layout client-ledger-layout supplier-ledger-layout">
+          <div class="client-list supplier-list-panel" data-suppliers-list></div>
+          <div class="dashboard-2026 supplier-profile-panel">
+            <div data-supplier-profile></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/js/api-client.js?v=20260605-auth-session"></script>
+    <script src="../assets/js/welcome.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/state.js?v=20260606-settings-sync"></script>
+    <script src="../assets/js/ui.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/invoice-print-engine.js?v=20260530-arabic-utf8"></script>
+    <script src="../assets/js/suppliers.js?v=20260530-arabic-utf8"></script>
+  </body>
+</html>
+
