@@ -9,15 +9,29 @@ WORKDIR /app
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
+# Install system dependencies for better performance
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install Python deps early for layer caching
 COPY requirements.txt ./
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt && \
+    pip install whitenoise gunicorn
 
 # Copy application code
 COPY . /app
 
 # Ensure the start script is executable
 RUN chmod +x ./start_prod.sh
+
+# Create staticfiles directory
+RUN mkdir -p /app/staticfiles
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost:${PORT:-8080}/api/health/ || exit 1
 
 # Expose the port (Railway will provide $PORT at runtime)
 EXPOSE 8080
