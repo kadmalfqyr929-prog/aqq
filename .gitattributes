@@ -1,0 +1,10 @@
+# Normalize line endings to LF in the repository (required for the Linux
+# hosts such as Railway), while allowing Windows checkouts to use CRLF.
+* text=auto
+
+# Shell scripts must remain LF: CRLF breaks `bash script.sh` on Linux.
+*.sh text eol=lf
+
+# Dotfiles / scripts that are executed verbatim on the server.
+Procfile text eol=lf
+start_gunicorn.sh text eol=lf
