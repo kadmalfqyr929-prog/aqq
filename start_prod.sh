@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+set -ex
 # Entrypoint for production: run migrations, collect static, then start gunicorn
 # Run from repository root (do not assume 'tox' subdirectory)
 
@@ -10,4 +10,5 @@ python manage.py migrate --noinput
 python manage.py collectstatic --noinput
 
 # Start gunicorn; PORT env var is provided by Railway
-exec gunicorn toxerp.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers ${GUNICORN_WORKERS:-4}
+# Use debug logging and capture stdout/stderr so runtime errors appear in container logs
+exec gunicorn toxerp.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers ${GUNICORN_WORKERS:-4} --log-level debug --capture-output --error-logfile -
