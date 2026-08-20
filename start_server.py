@@ -13,17 +13,27 @@ HEALTH_TIMEOUT_SECONDS = 2
 
 def local_host(value):
     host = str(value or "").strip() or "127.0.0.1"
-    return host if host in {"127.0.0.1", "localhost", "::1"} else "127.0.0.1"
+    return host
 
 
 def configure_environment(args):
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "toxerp.settings")
-    args.host = local_host(args.host)
+    # If a platform (eg. Railway) provides PORT, prefer it and allow binding to 0.0.0.0
+    env_port = os.environ.get("PORT")
+    if env_port:
+        try:
+            args.port = int(env_port)
+        except ValueError:
+            pass
+    # Prefer explicit HOST env var, otherwise use 0.0.0.0 when a PORT was provided
+    args.host = os.environ.get("HOST", args.host)
+    if not args.host:
+        args.host = "0.0.0.0" if env_port else "127.0.0.1"
+    # Set TOX_* env vars so desktop_config and settings.py pick them up
     os.environ["TOX_PORT"] = str(args.port)
     os.environ["TOX_HOST"] = args.host
     os.environ["TOX_BIND_HOST"] = args.host
     os.environ["TOX_LAN_ACCESS"] = "0"
-    
 
 def run_migrations():
     import django
